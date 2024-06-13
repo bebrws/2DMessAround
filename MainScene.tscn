@@ -1,29 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://3xc46isokwjx"]
+[gd_scene load_steps=4 format=3 uid="uid://3xc46isokwjx"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
-[ext_resource type="Script" path="res://CircleStaticBody2D.gd" id="1_5xqih"]
-[ext_resource type="Script" path="res://CircleCollisionShape2D.gd" id="3_23v1a"]
+[ext_resource type="PackedScene" uid="uid://cc880pljm015h" path="res://StaticPlanet.tscn" id="2_7y42h"]
 [ext_resource type="PackedScene" uid="uid://c7v6u4p8wo82e" path="res://Player.tscn" id="4_n3qrj"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_x8x32"]
-radius = 9.43397
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_3pd12")
 
-[node name="CircleStaticBody2D" type="StaticBody2D" parent="."]
-modulate = Color(0.875645, 0.730062, 0.921773, 1)
-self_modulate = Color(0.955358, 0.847148, 0.923603, 1)
-position = Vector2(73, 71)
-script = ExtResource("1_5xqih")
+[node name="StaticPlanet" parent="." instance=ExtResource("2_7y42h")]
+position = Vector2(782, 499)
 
-[node name="CircleCollisionShape2D" type="CollisionShape2D" parent="CircleStaticBody2D"]
-modulate = Color(0.961332, 0.848917, 0.872881, 1)
-self_modulate = Color(0.545376, 0.544936, 0, 1)
-shape = SubResource("CircleShape2D_x8x32")
-debug_color = Color(0.192157, 0.45098, 0.580392, 0.839216)
-script = ExtResource("3_23v1a")
-
-[node name="RigidCircleBody2D" parent="." instance=ExtResource("4_n3qrj")]
+[node name="Player" parent="." instance=ExtResource("4_n3qrj")]
 position = Vector2(254.159, 255.826)

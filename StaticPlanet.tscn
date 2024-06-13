@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cc880pljm015h"]
+
+[ext_resource type="Script" path="res://StaticPlanet.gd" id="1_nwhjs"]
+[ext_resource type="Script" path="res://CircleCollisionShape2D.gd" id="2_mvj85"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x8x32"]
+radius = 9.43397
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_efx8n"]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+mass = 3.0
+script = ExtResource("1_nwhjs")
+
+[node name="CircleCollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color(0.961332, 0.848917, 0.872881, 1)
+self_modulate = Color(0.545376, 0.544936, 0, 1)
+position = Vector2(73, 71)
+shape = SubResource("CircleShape2D_x8x32")
+debug_color = Color(0.192157, 0.45098, 0.580392, 0.839216)
+script = ExtResource("2_mvj85")
+
+[node name="Area2D" type="Area2D" parent="."]
+gravity_space_override = 1
+gravity_point = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(200, 200)
+shape = SubResource("CircleShape2D_efx8n")
+debug_color = Color(0.762903, 0.346844, 0.736999, 0.0862745)

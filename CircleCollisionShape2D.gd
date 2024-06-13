@@ -2,7 +2,8 @@ extends CollisionShape2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#self.shape.radius = get_parent().radius
+	self.shape.radius = get_parent().radius
+	#self.shape.radius = 10.0
 	pass # Replace with function body.
 
 

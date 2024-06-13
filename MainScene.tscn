@@ -21,9 +21,8 @@ script = ExtResource("1_5xqih")
 [node name="CircleCollisionShape2D" type="CollisionShape2D" parent="CircleStaticBody2D"]
 modulate = Color(0.961332, 0.848917, 0.872881, 1)
 self_modulate = Color(0.545376, 0.544936, 0, 1)
-position = Vector2(2.08165e-12, 2.08165e-12)
 shape = SubResource("CircleShape2D_x8x32")
-debug_color = Color(0.817838, 0.340151, 0.573651, 0.42)
+debug_color = Color(0.192157, 0.45098, 0.580392, 0.839216)
 script = ExtResource("3_23v1a")
 
 [node name="RigidCircleBody2D" parent="." instance=ExtResource("4_n3qrj")]

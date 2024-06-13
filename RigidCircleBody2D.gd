@@ -11,7 +11,7 @@ func _draw():
 	#print("mouse", get_global_mouse_position())
 	#print("pos", self.global_position)
 	
-	var impulse : Vector2 = ((get_global_mouse_position() - self.global_position).normalized() * speed * 100.0).rotated(self.rotation_degrees)
+	var impulse : Vector2 = ((get_global_mouse_position() - self.global_position).normalized() * speed * 100.0) #.rotated(self.rotation_degrees)
 	
 	#var impulse = self.global_position.direction_to(get_global_mouse_position())
 	#var impulse = dir_to.rotated(dir_to.angle()) * speed

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://c7v6u4p8wo82e"]
+
+[ext_resource type="Script" path="res://RigidCircleBody2D.gd" id="1_c6dxl"]
+[ext_resource type="Script" path="res://RigidCircleCollisionShape2D.gd" id="2_4c881"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vbyty"]
+
+[node name="RigidCircleBody2D" type="RigidBody2D"]
+script = ExtResource("1_c6dxl")
+
+[node name="RigidCircleCollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color(0.728437, 0.000418905, 0.731554, 1)
+self_modulate = Color(0.638913, 0.000312962, 0.641853, 1)
+scale = Vector2(5, 5)
+shape = SubResource("CircleShape2D_vbyty")
+script = ExtResource("2_4c881")

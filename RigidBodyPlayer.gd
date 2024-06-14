@@ -7,7 +7,6 @@ extends RigidBody2D
 
 func _draw():
 	draw_circle(Vector2.ZERO, radius, Color.ORANGE)	
-	
 	#print("mouse", get_global_mouse_position())
 	#print("pos", self.global_position)
 	

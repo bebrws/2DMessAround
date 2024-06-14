@@ -15,5 +15,6 @@ func _process(delta: float) -> void:
 			if p != op:
 				var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
 				print("Applying ", f, " to ", p, "from ", op)
-				p.apply_central_force(p.position.direction_to(op.position) * f)
+				p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
+				op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
 	pass

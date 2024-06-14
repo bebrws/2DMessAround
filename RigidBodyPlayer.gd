@@ -16,6 +16,7 @@ func _draw():
 
 	#draw_line(self.position, impulse, Color.BLUE_VIOLET)
 	draw_line(Vector2.ZERO, (Vector2.ZERO + impulse), Color.WHITE)
+	draw_line(Vector2.ZERO, Vector2(300.0,300.0), Color.DARK_SALMON)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass

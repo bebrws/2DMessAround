@@ -9,8 +9,8 @@ bounce = 0.7
 [sub_resource type="CircleShape2D" id="CircleShape2D_x8x32"]
 radius = 9.43397
 
-[node name="RigidBody2D" type="RigidBody2D" groups=["has_gravity"]]
-mass = 112.86
+[node name="StaticPlanet" type="RigidBody2D" groups=["has_gravity"]]
+mass = 1.26
 physics_material_override = SubResource("PhysicsMaterial_3vig3")
 script = ExtResource("1_nwhjs")
 radius = 100.0

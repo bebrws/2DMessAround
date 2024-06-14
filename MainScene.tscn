@@ -1,66 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://3xc46isokwjx"]
+[gd_scene load_steps=5 format=3 uid="uid://3xc46isokwjx"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
 [ext_resource type="PackedScene" uid="uid://c4ax8giwseu36" path="res://StaticPlanet.tscn" id="2_7y42h"]
-[ext_resource type="PackedScene" uid="uid://c7v6u4p8wo82e" path="res://Player.tscn" id="4_n3qrj"]
-[ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="5_6bd1k"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vpage"]
-atlas = ExtResource("5_6bd1k")
-region = Rect2(0, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jp17y"]
-atlas = ExtResource("5_6bd1k")
-region = Rect2(145, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m7bs1"]
-atlas = ExtResource("5_6bd1k")
-region = Rect2(290, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tj0kw"]
-atlas = ExtResource("5_6bd1k")
-region = Rect2(435, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fn66p"]
-atlas = ExtResource("5_6bd1k")
-region = Rect2(580, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pb6tc"]
-atlas = ExtResource("5_6bd1k")
-region = Rect2(725, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3wjyj"]
-atlas = ExtResource("5_6bd1k")
-region = Rect2(870, 0, 120, 180)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_2ywnm"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vpage")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jp17y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m7bs1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tj0kw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fn66p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pb6tc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3wjyj")
-}],
-"loop": true,
-"name": &"walking",
-"speed": 5.0
-}]
+[ext_resource type="PackedScene" uid="uid://c7v6u4p8wo82e" path="res://ControllablePlanet.tscn" id="4_n3qrj"]
+[ext_resource type="PackedScene" uid="uid://bsrg884cyea3d" path="res://Player.tscn" id="4_rgqba"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(2.08165e-12, 2.08165e-12)
@@ -68,13 +11,11 @@ script = ExtResource("1_3pd12")
 
 [node name="StaticPlanet" parent="." instance=ExtResource("2_7y42h")]
 position = Vector2(782, 499)
+mass = 15.12
+radius = 500.0
 
-[node name="Player" parent="." instance=ExtResource("4_n3qrj")]
-position = Vector2(254.159, 255.826)
+[node name="Player" parent="." instance=ExtResource("4_rgqba")]
+position = Vector2(1209, 1222)
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D"]
-sprite_frames = SubResource("SpriteFrames_2ywnm")
-animation = &"walking"
-frame_progress = 0.76052
+[node name="ControllablePlanet" parent="." instance=ExtResource("4_n3qrj")]
+position = Vector2(-2778, -211)

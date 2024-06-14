@@ -8,4 +8,12 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var gravs = self.get_tree().get_nodes_in_group("has_gravity")
+	for p in gravs:
+		# F = G * m_source * m_body / distance_to_source_center^2
+		for op in gravs:
+			if p != op:
+				var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
+				print("Applying ", f, " to ", p, "from ", op)
+				p.apply_central_force(p.position.direction_to(op.position) * f)
 	pass

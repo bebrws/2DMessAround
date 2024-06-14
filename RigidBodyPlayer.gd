@@ -12,15 +12,11 @@ func _draw():
 	#print("pos", self.global_position)
 	
 	var impulse : Vector2 = ((get_global_mouse_position() - self.global_position).normalized() * speed * 100.0) #.rotated(self.rotation_degrees)
-	
 	#var impulse = self.global_position.direction_to(get_global_mouse_position())
 	#var impulse = dir_to.rotated(dir_to.angle()) * speed
 
-	
 	#draw_line(self.position, impulse, Color.BLUE_VIOLET)
 	draw_line(Vector2.ZERO, (Vector2.ZERO + impulse), Color.WHITE)
-	
-	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass

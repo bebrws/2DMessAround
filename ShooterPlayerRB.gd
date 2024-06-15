@@ -92,7 +92,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 		#self.apply_central_impulse(-imp)		
 		pass
 	if Input.is_action_pressed("ui_up"):
-		self.apply_impulse(self.global_position.direction_to(get_global_mouse_position()).normalized() * -400.0)
+		self.linear_velocity += (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
 	#if InputEventMouse.
 		#print(self.get_tree().get_nodes_in_group("camera"))
 		#var camera: Camera2d = self.get_tree().get_nodes_in_group("camera")[0]

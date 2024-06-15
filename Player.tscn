@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://bsrg884cyea3d"]
+[gd_scene load_steps=14 format=3 uid="uid://bsrg884cyea3d"]
 
 [ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="1_c6tn0"]
 [ext_resource type="Script" path="res://ShooterPlayerRB.gd" id="1_jc1vy"]
+[ext_resource type="Script" path="res://PlayerCollisionShape2D.gd" id="3_fe3de"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_k85ya"]
-bounce = 0.75
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oh064"]
+absorbent = true
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vpage"]
 atlas = ExtResource("1_c6tn0")
@@ -67,19 +68,36 @@ animations = [{
 size = Vector2(17.1348, 20)
 
 [node name="RigidBody2D" type="RigidBody2D" groups=["has_gravity", "player"]]
-position = Vector2(62, -91)
-mass = 3.61
-physics_material_override = SubResource("PhysicsMaterial_k85ya")
+position = Vector2(1, -90)
+mass = 2.66
+physics_material_override = SubResource("PhysicsMaterial_oh064")
 center_of_mass_mode = 1
-center_of_mass = Vector2(60, 2.08167e-16)
+center_of_mass = Vector2(2.08167e-16, 2.08167e-16)
 script = ExtResource("1_jc1vy")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2ywnm")
 animation = &"walking"
-frame_progress = 0.317377
+frame = 5
+frame_progress = 0.722206
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.08165e-12, 0)
 scale = Vector2(7.12, 9.04)
 shape = SubResource("RectangleShape2D_3vro2")
+one_way_collision_margin = 6.0
+script = ExtResource("3_fe3de")
+
+[node name="HeadNode" type="Node2D" parent="."]
+position = Vector2(-1, -89)
+
+[node name="FootNode" type="Node2D" parent="."]
+position = Vector2(-1, 90)
+
+[node name="RightNode" type="Node2D" parent="."]
+position = Vector2(61, 0)
+
+[node name="LeftNode" type="Node2D" parent="."]
+position = Vector2(-61, 0)
+
+[node name="CenterNode" type="Node2D" parent="."]

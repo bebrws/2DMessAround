@@ -4,14 +4,15 @@
 [ext_resource type="Script" path="res://CircleCollisionShape2D.gd" id="2_mvj85"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3vig3"]
-bounce = 0.7
+absorbent = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x8x32"]
 radius = 9.43397
 
-[node name="StaticPlanet" type="RigidBody2D" groups=["has_gravity"]]
+[node name="StaticPlanet" type="RigidBody2D" groups=["has_gravity", "planet"]]
 mass = 1.26
 physics_material_override = SubResource("PhysicsMaterial_3vig3")
+center_of_mass_mode = 1
 script = ExtResource("1_nwhjs")
 radius = 100.0
 

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://3xc46isokwjx"]
+[gd_scene load_steps=6 format=3 uid="uid://3xc46isokwjx"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
 [ext_resource type="PackedScene" uid="uid://c4ax8giwseu36" path="res://StaticPlanet.tscn" id="2_7y42h"]
 [ext_resource type="PackedScene" uid="uid://c7v6u4p8wo82e" path="res://ControllablePlanet.tscn" id="4_n3qrj"]
 [ext_resource type="PackedScene" uid="uid://bsrg884cyea3d" path="res://Player.tscn" id="4_rgqba"]
+[ext_resource type="Script" path="res://ZoomingCamera2D.gd" id="5_u6ahq"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(2.08165e-12, 2.08165e-12)
@@ -17,5 +18,13 @@ radius = 500.0
 [node name="Player" parent="." instance=ExtResource("4_rgqba")]
 position = Vector2(1209, 1222)
 
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+remote_path = NodePath("../../Camera2D")
+
 [node name="ControllablePlanet" parent="." instance=ExtResource("4_n3qrj")]
-position = Vector2(-2778, -211)
+position = Vector2(-2634, -3136)
+
+[node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
+position = Vector2(1209, 1222)
+zoom = Vector2(0.1, 0.1)
+script = ExtResource("5_u6ahq")

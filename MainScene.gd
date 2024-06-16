@@ -19,7 +19,7 @@ func _process(delta: float) -> void:
 					#print(p, "  grav dist   ", player_to_planet)
 					if (player_to_planet - (p.radius + op.height_from_distance)) > disance_ignore_gravity:
 						var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
-						print("F  ", f, " for planet ", p)
+						#print("F  ", f, " for planet ", p)
 						p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
 						op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
 						

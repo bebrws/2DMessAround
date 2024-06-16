@@ -41,10 +41,11 @@ func _set_zoom_level(value: float) -> void:
 	
 	
 func _unhandled_input(event):
-	if event.is_action_pressed("zoom"):
-		print("zoomin")
-		# Inside a given class, we need to either write `self._zoom_level = ...` or explicitly
-		# call the setter function to use it.
-		_set_zoom_level(_zoom_level - zoom_factor)
-	if event.is_action_pressed("zoom_out"):
-		_set_zoom_level(_zoom_level + zoom_factor)
+	#if event.is_action_pressed("zoom"):
+		#print("zoomin")
+		## Inside a given class, we need to either write `self._zoom_level = ...` or explicitly
+		## call the setter function to use it.
+		#_set_zoom_level(_zoom_level - zoom_factor)
+	#if event.is_action_pressed("zoom_out"):
+		#_set_zoom_level(_zoom_level + zoom_factor)
+	pass

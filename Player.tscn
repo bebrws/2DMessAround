@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://bsrg884cyea3d"]
+[gd_scene load_steps=15 format=3 uid="uid://bsrg884cyea3d"]
 
 [ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="1_c6tn0"]
 [ext_resource type="Script" path="res://ShooterPlayerRB.gd" id="1_jc1vy"]
+[ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="2_1kv1d"]
 [ext_resource type="Script" path="res://PlayerCollisionShape2D.gd" id="3_fe3de"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oh064"]
@@ -74,6 +75,7 @@ physics_material_override = SubResource("PhysicsMaterial_oh064")
 center_of_mass_mode = 1
 center_of_mass = Vector2(2.08167e-16, 2.08167e-16)
 script = ExtResource("1_jc1vy")
+Bullet = ExtResource("2_1kv1d")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2ywnm")

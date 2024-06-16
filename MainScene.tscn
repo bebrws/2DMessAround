@@ -1,12 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://3xc46isokwjx"]
+[gd_scene load_steps=7 format=3 uid="uid://3xc46isokwjx"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
 [ext_resource type="PackedScene" uid="uid://c4ax8giwseu36" path="res://StaticPlanet.tscn" id="2_7y42h"]
 [ext_resource type="PackedScene" uid="uid://c7v6u4p8wo82e" path="res://ControllablePlanet.tscn" id="4_n3qrj"]
 [ext_resource type="PackedScene" uid="uid://bsrg884cyea3d" path="res://Player.tscn" id="4_rgqba"]
 [ext_resource type="Script" path="res://ZoomingCamera2D.gd" id="5_u6ahq"]
+[ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="6_12cbf"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Node2D" groups=["root_scene_node"]]
 position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_3pd12")
 
@@ -26,5 +27,7 @@ position = Vector2(-2634, -3136)
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
 position = Vector2(1209, 1222)
-zoom = Vector2(0.1, 0.1)
+zoom = Vector2(0.5, 0.5)
 script = ExtResource("5_u6ahq")
+
+[node name="Bullet" parent="." instance=ExtResource("6_12cbf")]

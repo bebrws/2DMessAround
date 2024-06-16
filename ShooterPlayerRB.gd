@@ -2,6 +2,9 @@
 extends RigidBody2D
 
 @export var height_from_distance: float = 90.0
+@export var Bullet: PackedScene
+
+var facing_right = true
 
 func calculate_gravity_force() -> Vector2:
 	var sum := Vector2.ZERO
@@ -68,13 +71,21 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 	#var imp = f2d.rotated(head.angle_to(f2d) + deg_to_rad(330))
 	var force_to_gravity = f2d.normalized() * 30.0
 	#print(f2d)
-
+	var on_ground = false
+	var planets = self.get_tree().get_nodes_in_group("planet")
+	for p in planets:
+		var player_to_planet = self.global_position.distance_to(p.global_position) 
+		#print("if state   ", (player_to_planet - (p.radius + self.height_from_distance)))
+		if (player_to_planet - (p.radius + self.height_from_distance)) <= 25.0:
+			on_ground = true
+	#print("on_ground  ", on_ground)
 	var sprite: AnimatedSprite2D = $AnimatedSprite2D
 	var cn: Node2D = $CenterNode
 	var ln: Node2D = $LeftNode
 	var rn: Node2D = $RightNode
 	
-	if Input.is_action_pressed("ui_right"):
+	if on_ground && Input.is_action_pressed("ui_right"):
+		facing_right = true
 		sprite.set_flip_h(false)
 		self.linear_velocity += force_to_gravity
 		#self.linear_velocity += (0.5 * force_to_gravity).rotated(deg_to_rad(90.0)) #.orthogonal()
@@ -84,7 +95,8 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 		#self.apply_force(force_to_gravity.orthogonal())
 		#self.linear_velocity
 		#self.apply_central_impulse(imp)
-	if Input.is_action_pressed("ui_left"):
+	if on_ground && Input.is_action_pressed("ui_left"):
+		facing_right = false
 		sprite.set_flip_h(true)
 		print("flip_v   ", sprite.flip_v)
 		self.linear_velocity += force_to_gravity.orthogonal().rotated(deg_to_rad(180))
@@ -93,6 +105,23 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 		pass
 	if Input.is_action_pressed("ui_up"):
 		self.linear_velocity += (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
+	if Input.is_action_pressed("ui_down"):
+		self.linear_velocity -= (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
+		
+	if Input.is_action_just_pressed("ui_accept"):
+		print("shoot")
+		var b = Bullet.instantiate()
+		b.creator = self
+		b.direction = self.global_position.direction_to(get_global_mouse_position()).normalized()
+		#b.transform = self.transform
+		#b.transform = Transform2D(self.rotation, b.position + Vector2(200, 200))
+		b.global_position = self.global_position
+		#b.global_position = Vector2(self.global_position.x + 200, self.global_position.y + 200)
+		#print(get_tree().get_nodes_in_group("root_scene_node"))
+		#get_tree().get_nodes_in_group("root_scene_node")[0].add_child(b)
+		get_tree().root.add_child(b)
+		pass
+	
 	#if InputEventMouse.
 		#print(self.get_tree().get_nodes_in_group("camera"))
 		#var camera: Camera2d = self.get_tree().get_nodes_in_group("camera")[0]

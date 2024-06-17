@@ -30,10 +30,7 @@ func _process(delta: float) -> void:
 	var impulse : Vector2 = (get_global_mouse_position() - self.position).normalized() * speed
 	#DebugDraw3D.draw_line(Vector3(self.position.x, self.position.y, 1.0), Vector3(impulse.x, impulse.y, 1.0), Color(1, 1, 0))
 	#DebugDraw3D.draw_line(Vector3(0.0, 0.0, 0.0), Vector3(100.0, 100.0, 0.0), Color(1, 0, 0))
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		#print("position", self.position)
-		#print("impulse", impulse)
-		#self.linear_velocity = Vector2(0.0, 0.0)
-		self.apply_central_impulse(impulse)
-		#self.apply_central_force(impulse)
+	#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		#self.apply_central_impulse(impulse)
+		
 	pass

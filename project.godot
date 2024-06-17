@@ -11,14 +11,19 @@ config_version=5
 [application]
 
 config/name="2DMessAround"
-run/main_scene="res://MainScene.tscn"
+run/main_scene="res://MultiplayerUI.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*res://GameManager.gd"
 
 [display]
 
 window/size/viewport_width=2048
 window/size/viewport_height=2048
+window/size/always_on_top=true
 
 [input]
 

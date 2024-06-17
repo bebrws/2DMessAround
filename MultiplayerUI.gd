@@ -1,5 +1,7 @@
 extends Control
 
+# https://www.youtube.com/watch?v=e0JLO_5UgQo
+
 @export var address = "localhost"
 @export var port = 8920
 
@@ -12,6 +14,27 @@ func _ready() -> void:
 	multiplayer.connection_failed.connect(PlayerConnectionFailed)
 	
 	pass # Replace with function body.
+
+@rpc("any_peer", "call_local")
+func StartGame():
+	print("Start Game Called")
+	var main_scene = load("res://MainScene.tscn").instantiate()
+	get_tree().root.add_child(main_scene)
+	self.hide()
+	
+@rpc("any_peer")
+func SendPlayerInfo(name, id):
+	print("Send Player Info called")
+	if !GameManager.players.has(id):
+		GameManager.players[id] = {
+			"name": name,
+			"id": id,
+			"score": 0,
+		}
+	if multiplayer.is_server():
+		for p in GameManager.players:
+			SendPlayerInfo.rpc(GameManager.players[p].name, p)
+		
 
 # Gets fired only from clients
 func PlayerConnectedToServer(id):
@@ -28,6 +51,8 @@ func PlayerDisconnected(id):
 # Gets fired on both server and client
 func PlayerConnected(id):
 	print("Player connected: ", id)
+	SendPlayerInfo.rpc_id(1, $Name.text, multiplayer.get_unique_id())
+	GameManager.multiplayer_id = multiplayer.get_unique_id()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -35,7 +60,7 @@ func _process(delta: float) -> void:
 
 
 func _on_start_game_button_down() -> void:
-	pass # Replace with function body.
+	StartGame.rpc()
 
 
 func _on_host_button_down() -> void:
@@ -48,6 +73,7 @@ func _on_host_button_down() -> void:
 	
 	multiplayer.set_multiplayer_peer(peer)
 	print("Waiting for players")
+	SendPlayerInfo($Name.text, multiplayer.get_unique_id())
 	
 	
 

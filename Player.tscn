@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bsrg884cyea3d"]
+[gd_scene load_steps=16 format=3 uid="uid://bsrg884cyea3d"]
 
 [ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="1_c6tn0"]
 [ext_resource type="Script" path="res://ShooterPlayerRB.gd" id="1_jc1vy"]
@@ -68,6 +68,26 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vro2"]
 size = Vector2(17.1348, 20)
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_310oy"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("AnimatedSprite2D:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("AnimatedSprite2D:flip_h")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath("AnimatedSprite2D:flip_v")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath(".:linear_velocity")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+
 [node name="RigidBody2D" type="RigidBody2D" groups=["has_gravity", "player"]]
 position = Vector2(1, -90)
 mass = 2.66
@@ -103,3 +123,6 @@ position = Vector2(61, 0)
 position = Vector2(-61, 0)
 
 [node name="CenterNode" type="Node2D" parent="."]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_310oy")

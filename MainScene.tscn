@@ -10,24 +10,22 @@
 [node name="Node2D" type="Node2D" groups=["root_scene_node"]]
 position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_3pd12")
+player_scene = ExtResource("4_rgqba")
 
 [node name="StaticPlanet" parent="." instance=ExtResource("2_7y42h")]
 position = Vector2(782, 499)
 mass = 15.12
 radius = 500.0
 
-[node name="Player" parent="." instance=ExtResource("4_rgqba")]
-position = Vector2(1209, 1222)
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
-remote_path = NodePath("../../Camera2D")
-
 [node name="ControllablePlanet" parent="." instance=ExtResource("4_n3qrj")]
 position = Vector2(-2634, -3136)
 
 [node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
-position = Vector2(1209, 1222)
+position = Vector2(1128, 1240)
 zoom = Vector2(0.5, 0.5)
 script = ExtResource("5_u6ahq")
 
 [node name="Bullet" parent="." instance=ExtResource("6_12cbf")]
+
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(1397, 376)

@@ -33,6 +33,15 @@ func StartGame():
 	print("Start Game Called ", multiplayer.get_unique_id())
 	self.hide()
 	get_tree().root.add_child(main_inst)
+	var main = get_tree().root.get_children()[3]
+	print(main)
+	for p in GameManager.players:
+		var s = main.get_node("MultiplayerSpawner")
+		print(s)
+		print("from ", multiplayer.get_unique_id(), " spawn ", str(GameManager.players[p].id))
+		s.spawn({"id": GameManager.players[p].id})
+	
+	#main_inst.owner = get_tree().root
 	#main_inst.show()
 	#get_tree().root.add_child(main_inst)
 	#var first_child = get_tree().root.get_child(1)
@@ -41,16 +50,16 @@ func StartGame():
 	
 @rpc("any_peer")
 func SendPlayerInfo(name, id):
-	print("Send Player Info called")
+	print(multiplayer.get_unique_id(), " - Send Player Info called name ", name, " id ", id)
 	if !GameManager.players.has(id):
 		GameManager.players[id] = {
 			"name": name,
 			"id": id,
 			"score": 0,
 		}
-	if multiplayer.is_server():
-		for p in GameManager.players:
-			SendPlayerInfo.rpc(GameManager.players[p].name, p)
+	#if multiplayer.is_server():
+	#for p in GameManager.players:
+		#SendPlayerInfo.rpc(GameManager.players[p].name, p)
 		
 
 # Gets fired only from clients
@@ -68,10 +77,13 @@ func PlayerDisconnected(id):
 # Gets fired on both server and client
 func PlayerConnected(id):
 	print("Player connected: ", id)
-	SendPlayerInfo.rpc_id(1, $Name.text, id)
+	var s = main_inst.get_node("MultiplayerSpawner")
+	main_inst.get_node("MultiplayerSpawner").spawn({"id": id})
+	#SendPlayerInfo.rpc_id(1, $Name.text, id)
 	#SendPlayerInfo.rpc_id(1, $Name.text, multiplayer.get_unique_id())
+	SendPlayerInfo.rpc($Name.text, multiplayer.get_unique_id())
 	#GameManager.multiplayer_id = multiplayer.get_unique_id()
-	_add_player_to_game(id)
+	#_add_player_to_game(id)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
@@ -93,7 +105,10 @@ func _on_host_button_down() -> void:
 	multiplayer.set_multiplayer_peer(peer)
 	print("BEBWaiting for players")
 	SendPlayerInfo($Name.text, multiplayer.get_unique_id())
-	_add_player_to_game(multiplayer.get_unique_id())
+	#_add_player_to_game(multiplayer.get_unique_id())
+	var s = main_inst.get_node("MultiplayerSpawner")
+	
+	main_inst.get_node("MultiplayerSpawner").spawn({"id": 1})
 	
 	
 
@@ -105,7 +120,9 @@ func _on_join_button_down() -> void:
 	peer.host.compress(ENetConnection.COMPRESS_RANGE_CODER)
 	multiplayer.set_multiplayer_peer(peer)
 	print("finished join")
-	_add_player_to_game(multiplayer.get_unique_id())
+	SendPlayerInfo($Name.text, multiplayer.get_unique_id())
+	#_add_player_to_game(multiplayer.get_unique_id())
+	main_inst.get_node("MultiplayerSpawner").spawn({"id": multiplayer.get_unique_id()})
 	
 
 func _add_player_to_game(id):
@@ -117,9 +134,6 @@ func _add_player_to_game(id):
 	var player_nodes = spawn_node.get_children()
 	print("spawn_node len is ", len(player_nodes))
 	print("AddingPlayer for inst ", multiplayer.get_unique_id(), " player len: ", len(player_nodes))
-	if multiplayer.get_unique_id() != 1:
-		spawn_node.global_position.x += 400
-		#player_to_add.global_position.x += len(player_nodes) * 400
 		
 	
 	player_to_add.multiplayer_id = id # multiplayer.get_unique_id()

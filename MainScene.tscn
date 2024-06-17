@@ -1,12 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://3xc46isokwjx"]
+[gd_scene load_steps=8 format=3 uid="uid://3xc46isokwjx"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
 [ext_resource type="PackedScene" uid="uid://c4ax8giwseu36" path="res://StaticPlanet.tscn" id="2_7y42h"]
 [ext_resource type="PackedScene" uid="uid://c7v6u4p8wo82e" path="res://ControllablePlanet.tscn" id="4_n3qrj"]
 [ext_resource type="PackedScene" uid="uid://bsrg884cyea3d" path="res://Player.tscn" id="4_rgqba"]
+[ext_resource type="Script" path="res://MultiplayerSpawner.gd" id="6_4oui1"]
 [ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="6_12cbf"]
 
-[node name="Node2D" type="Node2D" groups=["root_scene_node"]]
+[sub_resource type="LabelSettings" id="LabelSettings_p0nuo"]
+font_size = 38
+
+[node name="Root" type="Node2D" groups=["root_scene_node"]]
 position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_3pd12")
 player_scene = ExtResource("4_rgqba")
@@ -22,9 +26,20 @@ position = Vector2(-2634, -3136)
 [node name="Bullet" parent="." instance=ExtResource("6_12cbf")]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://MultiPlayerPlayer.tscn")
-spawn_path = NodePath("../SpawnNode")
+spawn_path = NodePath("..")
 spawn_limit = 2
+script = ExtResource("6_4oui1")
 
 [node name="SpawnNode" type="Node2D" parent="."]
 position = Vector2(2023, 839)
+
+[node name="MPIDLabel" type="Label" parent="."]
+modulate = Color(0.509804, 0.682353, 0.74902, 0.890196)
+self_modulate = Color(0.525916, 0.233793, 0.359434, 1)
+top_level = true
+offset_left = 1351.0
+offset_top = 191.0
+offset_right = 1449.0
+offset_bottom = 244.0
+text = "MPID"
+label_settings = SubResource("LabelSettings_p0nuo")

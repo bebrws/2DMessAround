@@ -9,8 +9,9 @@ extends RigidBody2D
 
 @export var multiplayer_id: int = 1:
 	set(id):
+		print("Setting synchronizer & multiplayer_id to ", id)
 		multiplayer_id = id
-		$InputSynchronizer.set_multiplayer_authority(id)
+		$PlayerSynchronizer.set_multiplayer_authority(id)
 		
 
 
@@ -57,6 +58,8 @@ func _draw():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	#$InputSynchronizer.root_path = $"../../"
+	
 	$Label.text = str(self.multiplayer_id)
 	if self.multiplayer_id == multiplayer.get_unique_id():
 		camera.enabled = true

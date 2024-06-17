@@ -6,6 +6,8 @@ extends Node2D
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$MPIDLabel.text = str(multiplayer.get_unique_id())
+	#$MultiplayerSpawner.spawn({"id": 1})
 	#for p in GameManager.players:
 		#var current_player = player_scene.instantiate()
 		#current_player.multiplayer_id = GameManager.players[p].id

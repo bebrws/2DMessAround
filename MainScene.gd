@@ -6,6 +6,7 @@ extends Node2D
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$StaticPlanetSynchronizer.set_multiplayer_authority(1)
 	$MPIDLabel.text = str(multiplayer.get_unique_id())
 	#$MultiplayerSpawner.spawn({"id": 1})
 	#for p in GameManager.players:
@@ -26,7 +27,9 @@ func _process(delta: float) -> void:
 		for op in gravs:
 			if p != op && p.global_position.distance_to(op.global_position) > 0.1:
 				if p.is_in_group("planet") && op.is_in_group("player"):
-					if GameManager.multiplayer_id == op.multiplayer_id:
+					#if GameManager.multiplayer_id == op.multiplayer_id:
+					#if true:
+					if get_multiplayer_authority() == multiplayer.get_unique_id():
 						var player_to_planet = p.global_position.distance_to(op.global_position)
 						#print(p, "  grav dist   ", player_to_planet)
 						if (player_to_planet - (p.radius + op.height_from_distance)) > disance_ignore_gravity:

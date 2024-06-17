@@ -56,6 +56,7 @@ func SendPlayerInfo(name, id):
 			"name": name,
 			"id": id,
 			"score": 0,
+			"bullets": [],
 		}
 	#if multiplayer.is_server():
 	#for p in GameManager.players:

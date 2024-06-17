@@ -132,7 +132,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 		if Input.is_action_just_pressed("ui_accept") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			print("shoot")
 			var b = Bullet.instantiate()
-			b.creator = self
+			#b.creator = self
 			b.direction = self.global_position.direction_to(get_global_mouse_position()).normalized()
 			#b.transform = self.transform
 			#b.transform = Transform2D(self.rotation, b.position + Vector2(200, 200))

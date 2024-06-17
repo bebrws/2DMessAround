@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c7v6u4p8wo82e" path="res://ControllablePlanet.tscn" id="4_n3qrj"]
 [ext_resource type="PackedScene" uid="uid://bsrg884cyea3d" path="res://Player.tscn" id="4_rgqba"]
 [ext_resource type="Script" path="res://MultiplayerSpawner.gd" id="6_4oui1"]
-[ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="6_12cbf"]
+[ext_resource type="Script" path="res://BulletSpawner.gd" id="6_sd1kn"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p0nuo"]
 font_size = 38
@@ -31,11 +31,8 @@ radius = 500.0
 [node name="ControllablePlanet" parent="." instance=ExtResource("4_n3qrj")]
 position = Vector2(-2634, -3136)
 
-[node name="Bullet" parent="." instance=ExtResource("6_12cbf")]
-
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 spawn_path = NodePath("..")
-spawn_limit = 2
 script = ExtResource("6_4oui1")
 
 [node name="SpawnNode" type="Node2D" parent="."]
@@ -54,3 +51,7 @@ label_settings = SubResource("LabelSettings_p0nuo")
 
 [node name="StaticPlanetSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_ei4hi")
+
+[node name="BulletSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("..")
+script = ExtResource("6_sd1kn")

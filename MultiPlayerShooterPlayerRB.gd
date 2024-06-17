@@ -138,17 +138,12 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 			self.linear_velocity -= (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
 			
 		if Input.is_action_just_pressed("ui_accept") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			print("shoot")
-			var b = Bullet.instantiate()
-			b.creator = self
-			b.direction = self.global_position.direction_to(get_global_mouse_position()).normalized()
-			#b.transform = self.transform
-			#b.transform = Transform2D(self.rotation, b.position + Vector2(200, 200))
-			b.global_position = self.global_position
-			#b.global_position = Vector2(self.global_position.x + 200, self.global_position.y + 200)
-			#print(get_tree().get_nodes_in_group("root_scene_node"))
-			#get_tree().get_nodes_in_group("root_scene_node")[0].add_child(b)
-			get_tree().root.add_child(b)
+			#print("shoot")
+			var bullet_direction = self.global_position.direction_to(get_global_mouse_position()).normalized()
+			if multiplayer.get_unique_id() != 1:
+				_shoot_bullet.rpc_id(1, self.multiplayer_id, bullet_direction, self.position)
+			else:
+				_shoot_bullet(1, bullet_direction, self.position)
 		
 		#if InputEventMouse.
 			#print(self.get_tree().get_nodes_in_group("camera"))
@@ -156,6 +151,14 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 			#camera.get_viewport().set_zoom(Vector2(camera.get_viewport().zoom.x + 0.1, camera.get_viewport().zoom.y + 0.1))
 		#print("player angular  ", self.angular_velocity)
 		self.angular_velocity = 0.0
+
+@rpc("any_peer")
+func _shoot_bullet(from_id, bullet_direction, position):
+	print("mpid ", multiplayer.get_unique_id(), " shooting for ", from_id, " pos ", position)
+	var main = get_tree().root.get_children()[3]
+	var s = main.get_node("BulletSpawner")
+	s.spawn({"from_id": multiplayer.get_unique_id(), "bullet_direction": bullet_direction, "position": position})
+	
 	
 func _process(delta: float) -> void:
 	#if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():

@@ -4,12 +4,16 @@ extends RigidBody2D
 @export var height_from_distance: float = 90.0
 @export var Bullet: PackedScene
 
-var facing_right = true
-var multiplayer_id = 0
+@export var facing_right = true
 
-var camera: Camera2D
+@export var multiplayer_id: int = 1:
+	set(id):
+		multiplayer_id = id
+		
 
-@export var gp: Vector2
+
+@onready var camera: Camera2D = $Camera2D
+
 
 func calculate_gravity_force() -> Vector2:
 	var sum := Vector2.ZERO
@@ -51,10 +55,11 @@ func _draw():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	camera = get_node("../Camera2D")
+	camera.enabled = true
+	#camera = get_node("../Camera2D")
 	$AnimatedSprite2D.rotate(deg_to_rad(180))
-	print("Setting Multiplayer synch for id: ", multiplayer_id)
-	$MultiplayerSynchronizer.set_multiplayer_authority(multiplayer_id)
+	#print("Setting Multiplayer synch for id: ", multiplayer_id)
+	#$MultiplayerSynchronizer.set_multiplayer_authority(multiplayer_id)
 	#if self.multiplayer_id == GameManager.multiplayer_id:
 		#var remote_transform_2d = RemoteTransform2D.new()
 		#remote_transform_2d.remote_path = NodePath("../Camera2D")
@@ -68,7 +73,8 @@ func _ready() -> void:
 func _integrate_forces(state: PhysicsDirectBodyState2D):
 	self.queue_redraw()
 	
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	#if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	if true:
 		#print(self.rotation_degrees)
 		#print(calculate_gravity_force())
 		#self.rotate((deg_to_rad(self.rotation_degrees)))
@@ -144,24 +150,24 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 		self.angular_velocity = 0.0
 	
 func _process(delta: float) -> void:
-	self.gp = self.global_position
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		#print("self: ", self.multiplayer_id, " GameManager ", GameManager.multiplayer_id)
-		if self.multiplayer_id == GameManager.multiplayer_id:
-			camera.position = self.position
-		var sprite: AnimatedSprite2D = $AnimatedSprite2D
-		var fn: Node2D = $FootNode
-		var hn: Node2D = $HeadNode
+	#if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
+	#print("self: ", self.multiplayer_id, " GameManager ", GameManager.multiplayer_id)
+	#if self.multiplayer_id == GameManager.multiplayer_id:
+	camera.global_position = self.global_position
 		
-		var f2h = fn.global_position.direction_to(hn.global_position)
-		var f2d = calculate_gravity_force()
-		#var p = get_tree().get_nodes_in_group("has_gravity")[0]
-		#var gv = fn.global_position.direction_to(p.global_position)
-		var gv = fn.global_position.direction_to(fn.global_position + f2d)
-		
-		#print("f2h ", f2h, " gv  ", gv)
-		
-		var r = f2h.angle_to(gv)
-		#print(r)
-		#sprite.rotate(r)
-		sprite.set_rotation(r + deg_to_rad(180))
+	var sprite: AnimatedSprite2D = $AnimatedSprite2D
+	var fn: Node2D = $FootNode
+	var hn: Node2D = $HeadNode
+	
+	var f2h = fn.global_position.direction_to(hn.global_position)
+	var f2d = calculate_gravity_force()
+	#var p = get_tree().get_nodes_in_group("has_gravity")[0]
+	#var gv = fn.global_position.direction_to(p.global_position)
+	var gv = fn.global_position.direction_to(fn.global_position + f2d)
+	
+	#print("f2h ", f2h, " gv  ", gv)
+	
+	var r = f2h.angle_to(gv)
+	#print(r)
+	#sprite.rotate(r)
+	sprite.set_rotation(r + deg_to_rad(180))

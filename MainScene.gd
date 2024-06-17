@@ -6,13 +6,13 @@ extends Node2D
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for p in GameManager.players:
-		var current_player = player_scene.instantiate()
-		current_player.multiplayer_id = GameManager.players[p].id
-		add_child(current_player)
-		var spawn_point = $SpawnPoint
-		current_player.global_position = spawn_point.global_position
-		
+	#for p in GameManager.players:
+		#var current_player = player_scene.instantiate()
+		#current_player.multiplayer_id = GameManager.players[p].id
+		#add_child(current_player)
+		#var spawn_point = $SpawnPoint
+		#current_player.global_position = spawn_point.global_position
+		#
 	pass # Replace with function body.
 
 

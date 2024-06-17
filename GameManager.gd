@@ -1,7 +1,10 @@
 extends Node
 
 var players = {}
-var multiplayer_id: int = 0
+var multiplayer_id: int = 1
+
+
+var mutiplayer_scene = preload("res://MultiPlayerPlayer.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

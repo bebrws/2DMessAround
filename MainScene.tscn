@@ -27,5 +27,8 @@ script = ExtResource("5_u6ahq")
 
 [node name="Bullet" parent="." instance=ExtResource("6_12cbf")]
 
-[node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(1397, 376)
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../Player")
+spawn_limit = 2
+
+[node name="Player" parent="." instance=ExtResource("4_rgqba")]

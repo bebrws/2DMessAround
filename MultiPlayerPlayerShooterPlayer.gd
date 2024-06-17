@@ -1,13 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bsrg884cyea3d"]
-
-[ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="1_c6tn0"]
-[ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="2_1kv1d"]
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oh064"]
-absorbent = true
-
-[sub_resource type="GDScript" id="GDScript_wumcn"]
-script/source = "#@tool
+#@tool
 extends RigidBody2D
 
 @export var height_from_distance: float = 90.0
@@ -21,7 +12,7 @@ var facing_right = true
 
 func calculate_gravity_force() -> Vector2:
 	var sum := Vector2.ZERO
-	var gravs = self.get_tree().get_nodes_in_group(\"has_gravity\")
+	var gravs = self.get_tree().get_nodes_in_group("has_gravity")
 	for body in gravs:
 		if (self != body):
 			#print(body))
@@ -36,7 +27,7 @@ func calculate_gravity_force() -> Vector2:
 
 func _draw():
 	#var sum := Vector2.ZERO
-	#var gravs = self.get_tree().get_nodes_in_group(\"has_gravity\")
+	#var gravs = self.get_tree().get_nodes_in_group("has_gravity")
 	#for body in gravs:
 		#if (self != body):
 			##print(body))
@@ -59,13 +50,13 @@ func _draw():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#camera = get_node(\"../Camera2D\")
+	#camera = get_node("../Camera2D")
 	$AnimatedSprite2D.rotate(deg_to_rad(180))
-	#print(\"Setting Multiplayer synch for id: \", multiplayer_id)
+	#print("Setting Multiplayer synch for id: ", multiplayer_id)
 	#$MultiplayerSynchronizer.set_multiplayer_authority(multiplayer_id)
 	#if self.multiplayer_id == GameManager.multiplayer_id:
 		#var remote_transform_2d = RemoteTransform2D.new()
-		#remote_transform_2d.remote_path = NodePath(\"../Camera2D\")
+		#remote_transform_2d.remote_path = NodePath("../Camera2D")
 		#remote_transform_2d.position = Vector2(1200, 1200)
 		#add_child(remote_transform_2d)
 	pass # Replace with function body.
@@ -96,44 +87,44 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 		var force_to_gravity = f2d.normalized() * 30.0
 		#print(f2d)
 		var on_ground = false
-		var planets = self.get_tree().get_nodes_in_group(\"planet\")
+		var planets = self.get_tree().get_nodes_in_group("planet")
 		for p in planets:
 			var player_to_planet = self.global_position.distance_to(p.global_position) 
-			#print(\"if state   \", (player_to_planet - (p.radius + self.height_from_distance)))
+			#print("if state   ", (player_to_planet - (p.radius + self.height_from_distance)))
 			if (player_to_planet - (p.radius + self.height_from_distance)) <= 25.0:
 				on_ground = true
-		#print(\"on_ground  \", on_ground)
+		#print("on_ground  ", on_ground)
 		var sprite: AnimatedSprite2D = $AnimatedSprite2D
 		var cn: Node2D = $CenterNode
 		var ln: Node2D = $LeftNode
 		var rn: Node2D = $RightNode
 		
-		if on_ground && Input.is_action_pressed(\"ui_right\"):
+		if on_ground && Input.is_action_pressed("ui_right"):
 			facing_right = true
 			sprite.set_flip_h(false)
 			self.linear_velocity += force_to_gravity
 			#self.linear_velocity += (0.5 * force_to_gravity).rotated(deg_to_rad(90.0)) #.orthogonal()
 			self.linear_velocity += force_to_gravity.orthogonal()
-			print(\"left  \", force_to_gravity.orthogonal())
+			print("left  ", force_to_gravity.orthogonal())
 			#self.apply_force(force_to_gravity)
 			#self.apply_force(force_to_gravity.orthogonal())
 			#self.linear_velocity
 			#self.apply_central_impulse(imp)
-		if on_ground && Input.is_action_pressed(\"ui_left\"):
+		if on_ground && Input.is_action_pressed("ui_left"):
 			facing_right = false
 			sprite.set_flip_h(true)
-			print(\"flip_v   \", sprite.flip_v)
+			print("flip_v   ", sprite.flip_v)
 			self.linear_velocity += force_to_gravity.orthogonal().rotated(deg_to_rad(180))
-			print(\"right  \", force_to_gravity.orthogonal().rotated(deg_to_rad(180)))
+			print("right  ", force_to_gravity.orthogonal().rotated(deg_to_rad(180)))
 			#self.apply_central_impulse(-imp)		
 			pass
-		if Input.is_action_pressed(\"ui_up\"):
+		if Input.is_action_pressed("ui_up"):
 			self.linear_velocity += (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
-		if Input.is_action_pressed(\"ui_down\"):
+		if Input.is_action_pressed("ui_down"):
 			self.linear_velocity -= (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
 			
-		if Input.is_action_just_pressed(\"ui_accept\") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			print(\"shoot\")
+		if Input.is_action_just_pressed("ui_accept") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			print("shoot")
 			var b = Bullet.instantiate()
 			b.creator = self
 			b.direction = self.global_position.direction_to(get_global_mouse_position()).normalized()
@@ -141,20 +132,20 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 			#b.transform = Transform2D(self.rotation, b.position + Vector2(200, 200))
 			b.global_position = self.global_position
 			#b.global_position = Vector2(self.global_position.x + 200, self.global_position.y + 200)
-			#print(get_tree().get_nodes_in_group(\"root_scene_node\"))
-			#get_tree().get_nodes_in_group(\"root_scene_node\")[0].add_child(b)
+			#print(get_tree().get_nodes_in_group("root_scene_node"))
+			#get_tree().get_nodes_in_group("root_scene_node")[0].add_child(b)
 			get_tree().root.add_child(b)
 		
 		#if InputEventMouse.
-			#print(self.get_tree().get_nodes_in_group(\"camera\"))
-			#var camera: Camera2d = self.get_tree().get_nodes_in_group(\"camera\")[0]
+			#print(self.get_tree().get_nodes_in_group("camera"))
+			#var camera: Camera2d = self.get_tree().get_nodes_in_group("camera")[0]
 			#camera.get_viewport().set_zoom(Vector2(camera.get_viewport().zoom.x + 0.1, camera.get_viewport().zoom.y + 0.1))
-		#print(\"player angular  \", self.angular_velocity)
+		#print("player angular  ", self.angular_velocity)
 		self.angular_velocity = 0.0
 	
 func _process(delta: float) -> void:
 	#if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-	#print(\"self: \", self.multiplayer_id, \" GameManager \", GameManager.multiplayer_id)
+	#print("self: ", self.multiplayer_id, " GameManager ", GameManager.multiplayer_id)
 	if self.multiplayer_id == GameManager.multiplayer_id:
 		camera.position = self.position
 		
@@ -164,111 +155,13 @@ func _process(delta: float) -> void:
 	
 	var f2h = fn.global_position.direction_to(hn.global_position)
 	var f2d = calculate_gravity_force()
-	#var p = get_tree().get_nodes_in_group(\"has_gravity\")[0]
+	#var p = get_tree().get_nodes_in_group("has_gravity")[0]
 	#var gv = fn.global_position.direction_to(p.global_position)
 	var gv = fn.global_position.direction_to(fn.global_position + f2d)
 	
-	#print(\"f2h \", f2h, \" gv  \", gv)
+	#print("f2h ", f2h, " gv  ", gv)
 	
 	var r = f2h.angle_to(gv)
 	#print(r)
 	#sprite.rotate(r)
 	sprite.set_rotation(r + deg_to_rad(180))
-"
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vpage"]
-atlas = ExtResource("1_c6tn0")
-region = Rect2(0, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jp17y"]
-atlas = ExtResource("1_c6tn0")
-region = Rect2(145, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m7bs1"]
-atlas = ExtResource("1_c6tn0")
-region = Rect2(290, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tj0kw"]
-atlas = ExtResource("1_c6tn0")
-region = Rect2(435, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fn66p"]
-atlas = ExtResource("1_c6tn0")
-region = Rect2(580, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pb6tc"]
-atlas = ExtResource("1_c6tn0")
-region = Rect2(725, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3wjyj"]
-atlas = ExtResource("1_c6tn0")
-region = Rect2(870, 0, 120, 180)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_2ywnm"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vpage")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jp17y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m7bs1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tj0kw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fn66p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pb6tc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3wjyj")
-}],
-"loop": true,
-"name": &"walking",
-"speed": 5.0
-}]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vro2"]
-size = Vector2(17.1348, 20)
-
-[node name="RigidBody2D" type="RigidBody2D" groups=["has_gravity", "player"]]
-position = Vector2(1, -90)
-mass = 2.66
-physics_material_override = SubResource("PhysicsMaterial_oh064")
-center_of_mass_mode = 1
-center_of_mass = Vector2(2.08167e-16, 2.08167e-16)
-script = SubResource("GDScript_wumcn")
-Bullet = ExtResource("2_1kv1d")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_2ywnm")
-animation = &"walking"
-frame = 5
-frame_progress = 0.722206
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2.08165e-12, 0)
-scale = Vector2(7.12, 9.04)
-shape = SubResource("RectangleShape2D_3vro2")
-one_way_collision_margin = 6.0
-
-[node name="HeadNode" type="Node2D" parent="."]
-position = Vector2(-1, -89)
-
-[node name="FootNode" type="Node2D" parent="."]
-position = Vector2(-1, 90)
-
-[node name="RightNode" type="Node2D" parent="."]
-position = Vector2(61, 0)
-
-[node name="LeftNode" type="Node2D" parent="."]
-position = Vector2(-61, 0)
-
-[node name="CenterNode" type="Node2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="."]

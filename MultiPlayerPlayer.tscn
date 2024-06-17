@@ -1,7 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://bsrg884cyea3d"]
+[gd_scene load_steps=14 format=3 uid="uid://bdxdojlrm5uuk"]
 
-[ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="1_c6tn0"]
-[ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="2_1kv1d"]
+[ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="2_6txfk"]
+[ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="3_2t5te"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oh064"]
 absorbent = true
@@ -177,31 +177,31 @@ func _process(delta: float) -> void:
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vpage"]
-atlas = ExtResource("1_c6tn0")
+atlas = ExtResource("3_2t5te")
 region = Rect2(0, 0, 120, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jp17y"]
-atlas = ExtResource("1_c6tn0")
+atlas = ExtResource("3_2t5te")
 region = Rect2(145, 0, 120, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m7bs1"]
-atlas = ExtResource("1_c6tn0")
+atlas = ExtResource("3_2t5te")
 region = Rect2(290, 0, 120, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tj0kw"]
-atlas = ExtResource("1_c6tn0")
+atlas = ExtResource("3_2t5te")
 region = Rect2(435, 0, 120, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fn66p"]
-atlas = ExtResource("1_c6tn0")
+atlas = ExtResource("3_2t5te")
 region = Rect2(580, 0, 120, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pb6tc"]
-atlas = ExtResource("1_c6tn0")
+atlas = ExtResource("3_2t5te")
 region = Rect2(725, 0, 120, 180)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3wjyj"]
-atlas = ExtResource("1_c6tn0")
+atlas = ExtResource("3_2t5te")
 region = Rect2(870, 0, 120, 180)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2ywnm"]
@@ -243,7 +243,7 @@ physics_material_override = SubResource("PhysicsMaterial_oh064")
 center_of_mass_mode = 1
 center_of_mass = Vector2(2.08167e-16, 2.08167e-16)
 script = SubResource("GDScript_wumcn")
-Bullet = ExtResource("2_1kv1d")
+Bullet = ExtResource("2_6txfk")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2ywnm")

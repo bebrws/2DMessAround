@@ -8,9 +8,7 @@ func _draw():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#var ccol = $CircleCollisionShape2D
-	#ccol.transform.scale
-	pass # Replace with function body.
+	$StaticPlanetSynchronizer.set_multiplayer_authority(1)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

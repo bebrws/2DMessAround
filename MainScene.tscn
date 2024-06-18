@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://3xc46isokwjx"]
+[gd_scene load_steps=11 format=3 uid="uid://3xc46isokwjx"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
 [ext_resource type="PackedScene" uid="uid://c4ax8giwseu36" path="res://StaticPlanet.tscn" id="2_7y42h"]
@@ -11,14 +11,6 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_p0nuo"]
 font_size = 38
-
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ei4hi"]
-properties/0/path = NodePath("StaticPlanet:position")
-properties/0/spawn = true
-properties/0/replication_mode = 1
-properties/1/path = NodePath("StaticPlanet:rotation")
-properties/1/spawn = true
-properties/1/replication_mode = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_ckf0p"]
 font_size = 32
@@ -55,10 +47,6 @@ offset_right = 1449.0
 offset_bottom = 244.0
 text = "MPID"
 label_settings = SubResource("LabelSettings_p0nuo")
-
-[node name="StaticPlanetSynchronizer" type="MultiplayerSynchronizer" parent="GameRoot"]
-replication_interval = 0.013
-replication_config = SubResource("SceneReplicationConfig_ei4hi")
 
 [node name="BulletSpawner" type="MultiplayerSpawner" parent="GameRoot"]
 spawn_path = NodePath("..")

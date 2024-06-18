@@ -6,7 +6,6 @@ extends Node2D
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$StaticPlanetSynchronizer.set_multiplayer_authority(1)
 	$MPIDLabel.text = str(multiplayer.get_unique_id())
 	#$MultiplayerSpawner.spawn({"id": 1})
 	#for p in GameManager.players:

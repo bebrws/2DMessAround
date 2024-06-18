@@ -21,7 +21,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if get_multiplayer_authority() == multiplayer.get_unique_id():
+	#if get_multiplayer_authority() == multiplayer.get_unique_id():
 		var gravs = self.get_tree().get_nodes_in_group("has_gravity")
 		for p in gravs:
 			# F = G * m_source * m_body / distance_to_source_center^2
@@ -36,8 +36,12 @@ func _process(delta: float) -> void:
 							if (player_to_planet - (p.radius + op.height_from_distance)) > disance_ignore_gravity:
 								var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
 								#print("F  ", f, " for planet ", p)
-								p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
-								op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
+								
+								# Dont move plnaet to help with jitter?
+								#if GameManager.multiplayer_id == 1:
+									#p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
+								if GameManager.multiplayer_id == op.multiplayer_id:
+									op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
 								
 							#print("planet  ", p.radius)
 						#print("di   ", p.position.distance_squared_to(op.position))

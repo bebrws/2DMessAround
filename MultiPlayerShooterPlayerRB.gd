@@ -14,6 +14,7 @@ var last_shot_time: int = 0
 		multiplayer_id = id
 		$PlayerSynchronizer.set_multiplayer_authority(id)
 		
+		
 
 
 @onready var camera: Camera2D = $Camera2D

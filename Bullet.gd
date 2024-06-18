@@ -19,8 +19,8 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	print("Bulllet collison")
-	#if multiplayer.get_unique_id() != self.shooter_multiplayer_id:
-		#queue_free()
+	#print(multiplayer.get_unique_id(), " - Bulllet collison ", body.name, " - body ", body["multiplayer_id"], " shooter ", self.shooter_multiplayer_id)
+	if body.is_in_group("player") && body.multiplayer_id != self.shooter_multiplayer_id:
+		queue_free()
 	
 	

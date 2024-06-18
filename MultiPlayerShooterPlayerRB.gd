@@ -6,6 +6,7 @@ extends RigidBody2D
 
 @export var facing_right = true
 
+var last_shot_time: int = 0
 
 @export var multiplayer_id: int = 1:
 	set(id):
@@ -155,9 +156,11 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 @rpc("any_peer")
 func _shoot_bullet(from_id, bullet_direction, position):
 	print("mpid ", multiplayer.get_unique_id(), " shooting for ", from_id, " pos ", position)
+	if last_shot_time + 1000 > Time.get_ticks_msec():
+		last_shot_time = Time.get_ticks_msec()
 	var main = get_tree().root.get_children()[3]
 	var s = main.get_node("BulletSpawner")
-	s.spawn({"from_id": multiplayer.get_unique_id(), "bullet_direction": bullet_direction, "position": position})
+	s.spawn({"from_id": from_id, "bullet_direction": bullet_direction, "position": position})
 	
 	
 func _process(delta: float) -> void:

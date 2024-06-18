@@ -21,32 +21,34 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if multiplayer.get_unique_id() == 1:
+		GameManager.UpdateAllPlayersInfo()
 	#if get_multiplayer_authority() == multiplayer.get_unique_id():
-		var gravs = self.get_tree().get_nodes_in_group("has_gravity")
-		for p in gravs:
-			# F = G * m_source * m_body / distance_to_source_center^2
-			for op in gravs:
-				if p != op && p.global_position.distance_to(op.global_position) > 0.1:
-					if p.is_in_group("planet") && op.is_in_group("player"):
-						#if GameManager.multiplayer_id == op.multiplayer_id:
-						if true:
-						#if get_multiplayer_authority() == multiplayer.get_unique_id():
-							var player_to_planet = p.global_position.distance_to(op.global_position)
-							#print(p, "  grav dist   ", player_to_planet)
-							if (player_to_planet - (p.radius + op.height_from_distance)) > disance_ignore_gravity:
-								var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
-								#print("F  ", f, " for planet ", p)
-								
-								# Dont move plnaet to help with jitter?
-								#if GameManager.multiplayer_id == 1:
-									#p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
-								if GameManager.multiplayer_id == op.multiplayer_id:
-									op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
-								
-							#print("planet  ", p.radius)
-						#print("di   ", p.position.distance_squared_to(op.position))
-						#var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
-						#print("f  ", f)
-						#print("Applying ", f, " to ", p, "from ", op)
-						#p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
-						#op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
+	var gravs = self.get_tree().get_nodes_in_group("has_gravity")
+	for p in gravs:
+		# F = G * m_source * m_body / distance_to_source_center^2
+		for op in gravs:
+			if p != op && p.global_position.distance_to(op.global_position) > 0.1:
+				if p.is_in_group("planet") && op.is_in_group("player"):
+					#if GameManager.multiplayer_id == op.multiplayer_id:
+					if true:
+					#if get_multiplayer_authority() == multiplayer.get_unique_id():
+						var player_to_planet = p.global_position.distance_to(op.global_position)
+						#print(p, "  grav dist   ", player_to_planet)
+						if (player_to_planet - (p.radius + op.height_from_distance)) > disance_ignore_gravity:
+							var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
+							#print("F  ", f, " for planet ", p)
+							
+							# Dont move plnaet to help with jitter?
+							#if GameManager.multiplayer_id == 1:
+								#p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
+							if GameManager.multiplayer_id == op.multiplayer_id:
+								op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
+							
+						#print("planet  ", p.radius)
+					#print("di   ", p.position.distance_squared_to(op.position))
+					#var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
+					#print("f  ", f)
+					#print("Applying ", f, " to ", p, "from ", op)
+					#p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
+					#op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)

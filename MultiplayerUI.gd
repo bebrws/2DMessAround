@@ -53,25 +53,6 @@ func StartGame():
 	#get_tree().root.get_child()
 	
 
-# SHOULD BE call_remote ?
-@rpc("any_peer")
-func SendPlayerInfo(name, id):
-	print(multiplayer.get_unique_id(), " - Send Player Info called name ", name, " id ", id)
-	if multiplayer.get_unique_id() == 1 and !GameManager.players.has(id):
-		GameManager.players[id] = {
-			"name": name,
-			"id": id,
-			"score": 0,
-			"bullets": [],
-		}
-		var main = null
-		var tree_children = get_tree().root.get_children()
-		for tc in tree_children:
-			if tc.name == "Root":
-				main = tc
-		var s = main.get_node("GameRoot").get_node("MultiplayerSpawner")
-		print("from ", multiplayer.get_unique_id(), " spawn ", str(id))
-		s.spawn({"id": id})
 	
 
 # Gets fired only from clients
@@ -89,8 +70,7 @@ func PlayerDisconnected(id):
 # Gets fired on both server and client
 func PlayerConnected(id):
 	print("Player connected: ", id)
-	SendPlayerInfo.rpc_id(1, $Name.text, multiplayer.get_unique_id())
-	#SendPlayerInfo.rpc($Name.text, multiplayer.get_unique_id())
+	GameManager.SendPlayerInfo.rpc_id(1, $Name.text, multiplayer.get_unique_id())
 	GameManager.multiplayer_id = multiplayer.get_unique_id()
 	
 
@@ -122,7 +102,6 @@ func _on_host_button_down() -> void:
 	get_tree().root.add_child(main_inst)
 	
 	print("***** CREATED SERVER *****")
-	#SendPlayerInfo($Name.text, multiplayer.get_unique_id())
 	
 
 
@@ -134,5 +113,4 @@ func _on_join_button_down() -> void:
 	print("finished join")
 	self.hide()
 	get_tree().root.add_child(main_inst)
-	SendPlayerInfo($Name.text, multiplayer.get_unique_id())
 

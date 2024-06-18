@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://3xc46isokwjx"]
+[gd_scene load_steps=10 format=3 uid="uid://3xc46isokwjx"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
 [ext_resource type="PackedScene" uid="uid://c4ax8giwseu36" path="res://StaticPlanet.tscn" id="2_7y42h"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bsrg884cyea3d" path="res://Player.tscn" id="4_rgqba"]
 [ext_resource type="Script" path="res://MultiplayerSpawner.gd" id="6_4oui1"]
 [ext_resource type="Script" path="res://BulletSpawner.gd" id="6_sd1kn"]
+[ext_resource type="Script" path="res://HUDPlayersRect.gd" id="7_3bfqq"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_p0nuo"]
 font_size = 38
@@ -18,27 +19,29 @@ properties/1/path = NodePath("StaticPlanet:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[node name="Root" type="Node2D" groups=["root_scene_node"]]
+[node name="Root" type="Node2D"]
+
+[node name="GameRoot" type="Node2D" parent="." groups=["root_scene_node"]]
 position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_3pd12")
 player_scene = ExtResource("4_rgqba")
 
-[node name="StaticPlanet" parent="." instance=ExtResource("2_7y42h")]
+[node name="StaticPlanet" parent="GameRoot" instance=ExtResource("2_7y42h")]
 position = Vector2(782, 499)
 mass = 15.12
 radius = 500.0
 
-[node name="ControllablePlanet" parent="." instance=ExtResource("4_n3qrj")]
+[node name="ControllablePlanet" parent="GameRoot" instance=ExtResource("4_n3qrj")]
 position = Vector2(-2634, -3136)
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="GameRoot"]
 spawn_path = NodePath("..")
 script = ExtResource("6_4oui1")
 
-[node name="SpawnNode" type="Node2D" parent="."]
+[node name="SpawnNode" type="Node2D" parent="GameRoot"]
 position = Vector2(2023, 839)
 
-[node name="MPIDLabel" type="Label" parent="."]
+[node name="MPIDLabel" type="Label" parent="GameRoot"]
 modulate = Color(0.509804, 0.682353, 0.74902, 0.890196)
 self_modulate = Color(0.525916, 0.233793, 0.359434, 1)
 top_level = true
@@ -49,10 +52,25 @@ offset_bottom = 244.0
 text = "MPID"
 label_settings = SubResource("LabelSettings_p0nuo")
 
-[node name="StaticPlanetSynchronizer" type="MultiplayerSynchronizer" parent="."]
+[node name="StaticPlanetSynchronizer" type="MultiplayerSynchronizer" parent="GameRoot"]
 replication_interval = 0.013
 replication_config = SubResource("SceneReplicationConfig_ei4hi")
 
-[node name="BulletSpawner" type="MultiplayerSpawner" parent="."]
+[node name="BulletSpawner" type="MultiplayerSpawner" parent="GameRoot"]
 spawn_path = NodePath("..")
 script = ExtResource("6_sd1kn")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="PlayersRect" type="ColorRect" parent="HUD"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -99.0
+offset_right = 101.0
+offset_bottom = 200.0
+grow_horizontal = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+color = Color(0.0313726, 0.0313726, 0.0313726, 0.803922)
+script = ExtResource("7_3bfqq")

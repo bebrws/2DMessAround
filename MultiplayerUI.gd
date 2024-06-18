@@ -40,7 +40,7 @@ func StartGame():
 	var main = get_tree().root.get_children()[3]
 	print(main)
 	for p in GameManager.players:
-		var s = main.get_node("MultiplayerSpawner")
+		var s = main.get_node("GameRoot").get_node("MultiplayerSpawner")
 		print(s)
 		print("from ", multiplayer.get_unique_id(), " spawn ", str(GameManager.players[p].id))
 		s.spawn({"id": GameManager.players[p].id})
@@ -69,7 +69,7 @@ func SendPlayerInfo(name, id):
 		for tc in tree_children:
 			if tc.name == "Root":
 				main = tc
-		var s = main.get_node("MultiplayerSpawner")
+		var s = main.get_node("GameRoot").get_node("MultiplayerSpawner")
 		print("from ", multiplayer.get_unique_id(), " spawn ", str(id))
 		s.spawn({"id": id})
 	

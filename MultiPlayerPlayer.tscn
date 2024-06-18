@@ -1,9 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://bdxdojlrm5uuk"]
+[gd_scene load_steps=15 format=3 uid="uid://bdxdojlrm5uuk"]
 
 [ext_resource type="Script" path="res://MultiPlayerShooterPlayerRB.gd" id="1_rmf1d"]
 [ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="2_6txfk"]
 [ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="3_2t5te"]
-[ext_resource type="Script" path="res://GameViewNode.gd" id="4_d6r6o"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oh064"]
 absorbent = true
@@ -131,6 +130,3 @@ offset_top = -121.0
 offset_right = -17.0
 offset_bottom = -98.0
 text = "Player"
-
-[node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("4_d6r6o")

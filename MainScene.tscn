@@ -50,6 +50,7 @@ text = "MPID"
 label_settings = SubResource("LabelSettings_p0nuo")
 
 [node name="StaticPlanetSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_interval = 0.013
 replication_config = SubResource("SceneReplicationConfig_ei4hi")
 
 [node name="BulletSpawner" type="MultiplayerSpawner" parent="."]

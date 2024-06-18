@@ -98,6 +98,8 @@ func PlayerConnected(id):
 
 func _process(delta: float) -> void:
 	pass
+	#if is_server:
+		#server.poll()
 
 #
 #func _on_start_game_button_down() -> void:

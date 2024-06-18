@@ -159,8 +159,9 @@ func _shoot_bullet(from_id, bullet_direction, position):
 	print("mpid ", multiplayer.get_unique_id(), " shooting for ", from_id, " pos ", position)
 	if last_shot_time + 100 < Time.get_ticks_msec():
 		last_shot_time = Time.get_ticks_msec()
-		var main = get_tree().root.get_children()[3]
-		var s = main.get_node("BulletSpawner")
+		#var main = get_tree().root.get_children()[3]
+		#var s = main.get_node("BulletSpawner")
+		var s = $"../BulletSpawner"
 		s.spawn({"from_id": from_id, "bullet_direction": bullet_direction, "position": position})
 	
 	

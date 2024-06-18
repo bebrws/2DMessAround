@@ -156,11 +156,11 @@ func _integrate_forces(state: PhysicsDirectBodyState2D):
 @rpc("any_peer")
 func _shoot_bullet(from_id, bullet_direction, position):
 	print("mpid ", multiplayer.get_unique_id(), " shooting for ", from_id, " pos ", position)
-	if last_shot_time + 1000 > Time.get_ticks_msec():
+	if last_shot_time + 100 < Time.get_ticks_msec():
 		last_shot_time = Time.get_ticks_msec()
-	var main = get_tree().root.get_children()[3]
-	var s = main.get_node("BulletSpawner")
-	s.spawn({"from_id": from_id, "bullet_direction": bullet_direction, "position": position})
+		var main = get_tree().root.get_children()[3]
+		var s = main.get_node("BulletSpawner")
+		s.spawn({"from_id": from_id, "bullet_direction": bullet_direction, "position": position})
 	
 	
 func _process(delta: float) -> void:

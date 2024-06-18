@@ -4,6 +4,7 @@ extends Control
 
 @export var address = "localhost"
 @export var port = 8920
+var websocket_addr = "ws://" + address  + ":" + str(port)
 
 var main_scene: PackedScene = preload("res://MainScene.tscn")
 var main_inst: Node = null
@@ -11,7 +12,9 @@ var mutiplayer_player_scene: PackedScene = preload("res://MultiPlayerPlayer.tscn
 
 var is_server = false
 
-var peer
+var server
+
+var peer := WebSocketMultiplayerPeer.new()
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	main_inst = main_scene.instantiate()
@@ -49,6 +52,8 @@ func StartGame():
 	#first_child.show()
 	#get_tree().root.get_child()
 	
+
+# SHOULD BE call_remote ?
 @rpc("any_peer")
 func SendPlayerInfo(name, id):
 	print(multiplayer.get_unique_id(), " - Send Player Info called name ", name, " id ", id)
@@ -102,12 +107,10 @@ func _process(delta: float) -> void:
 
 func _on_host_button_down() -> void:
 	is_server = true
-	peer = ENetMultiplayerPeer.new()
-	var error = peer.create_server(port, 2)
+	var error = peer.create_server(port)
 	if error != OK:
 		print("Cannot host: ", error)
 		return
-	peer.host.compress(ENetConnection.COMPRESS_RANGE_CODER)
 	
 	multiplayer.set_multiplayer_peer(peer)
 	
@@ -122,10 +125,9 @@ func _on_host_button_down() -> void:
 
 
 func _on_join_button_down() -> void:
-	print("starting join")
-	peer = ENetMultiplayerPeer.new()
-	peer.create_client(address, port)
-	peer.host.compress(ENetConnection.COMPRESS_RANGE_CODER)
+	print("starting join to ", websocket_addr)
+	#peer = ENetMultiplayerPeer.new()
+	peer.create_client(websocket_addr)
 	multiplayer.set_multiplayer_peer(peer)
 	print("finished join")
 	self.hide()

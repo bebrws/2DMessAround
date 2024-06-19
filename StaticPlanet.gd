@@ -26,6 +26,7 @@ func _ready() -> void:
 		#print("Collision Shape not there")
 	print("_ready staticplanet radius ", self.radius)
 	planet_sprite.scale *= radius / 10.0
+	self.mass *= radius / 250.0
 	#planet_sprite.transform.get_scale() = planet_sprite.transform.scale * radius
 	
 

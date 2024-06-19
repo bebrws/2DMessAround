@@ -4,7 +4,7 @@ extends RigidBody2D
 @export var height_from_distance: float = 90.0
 @export var Bullet: PackedScene
 @export var move_speed: float = 100000.0
-
+@export var booster_speed: float = 5.0
 @export var facing_right = true
 
 var last_shot_time: int = 0
@@ -36,8 +36,8 @@ func calculate_gravity_force() -> Vector2:
 	for body in gravs:
 		if (self != body):
 			#print(body))
-			#var f = self.position.direction_to(body.position).normalized() * (98000 * self.mass * body.mass) / self.position.distance_squared_to(body.position)
-			var f = self.position.direction_to(body.position).normalized() * (98000 * self.mass * body.mass) / self.position.distance_to(body.position)
+			var f = self.position.direction_to(body.position).normalized() * (98000 * self.mass * body.mass) / self.position.distance_squared_to(body.position)
+			#var f = self.position.direction_to(body.position).normalized() * (98000 * self.mass * body.mass) / self.position.distance_to(body.position)
 			#draw_line(Vector2.ZERO, (self.position.direction_to(body.position)).normalized() * 800.0, Color.YELLOW)
 			#rotated(deg_to_rad(rotation_degrees))
 			#print(body, f)
@@ -225,12 +225,12 @@ func _process(delta: float) -> void:
 			self.apply_central_force(f)
 		
 		if Input.is_action_pressed("ui_up"):
-			var f = cn.global_position.direction_to(hn.global_position) * delta * move_speed
+			var f = cn.global_position.direction_to(hn.global_position) * delta * move_speed * booster_speed
 			#print("up f ", f)
 			self.apply_central_force(f)
 			#self.linear_velocity += (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
 		if Input.is_action_pressed("ui_down"):
-			var f = cn.global_position.direction_to(fn.global_position) * delta * move_speed
+			var f = cn.global_position.direction_to(fn.global_position) * delta * move_speed * booster_speed
 			#print("down f ", f)
 			self.apply_central_force(f)
 			#self.linear_velocity -= (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)

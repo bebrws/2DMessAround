@@ -1,6 +1,6 @@
 extends Node2D
 
-@export var disance_ignore_gravity: float = 20.0
+@export var distance_ignore_gravity: float = 20.0
 
 @export var player_scene: PackedScene
 	
@@ -22,6 +22,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if multiplayer.get_unique_id() == 1:
 		GameManager.UpdateAllPlayersInfo()
+		
+		if Input.is_action_just_pressed("ui_accept"): # or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			$PlanetSpawner.spawn()
+		
 	#if get_multiplayer_authority() == multiplayer.get_unique_id():
 	var gravs = self.get_tree().get_nodes_in_group("has_gravity")
 	for p in gravs:
@@ -34,16 +38,22 @@ func _process(delta: float) -> void:
 					#if get_multiplayer_authority() == multiplayer.get_unique_id():
 						var player_to_planet = p.global_position.distance_to(op.global_position)
 						#print(p, "  grav dist   ", player_to_planet)
-						if (player_to_planet - (p.radius + op.height_from_distance)) > disance_ignore_gravity:
-							var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
-							#print("F  ", f, " for planet ", p)
+						if (player_to_planet - (p.radius + op.height_from_distance)) > distance_ignore_gravity:
+							var f = delta * (980000000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)
+							#var f = delta * (98000 * p.mass * op.mass) / p.position.distance_to(op.position)
 							
 							# Dont move plnaet to help with jitter?
 							#if GameManager.multiplayer_id == 1:
 								#p.apply_central_impulse(p.position.direction_to(op.position).normalized() * f)
 							if GameManager.multiplayer_id == op.multiplayer_id:
-								op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
-							
+								#print("F  ", f, " for player ", op)
+								#op.apply_central_impulse(op.position.direction_to(p.position).normalized() * f)
+								op.apply_central_force(op.position.direction_to(p.position).normalized() * f)
+						#if (player_to_planet - (p.radius + op.height_from_distance)) < distance_ignore_gravity:
+							#p.position
+						#else:
+							#if GameManager.multiplayer_id == op.multiplayer_id:
+								#p.distance_to(op).
 						#print("planet  ", p.radius)
 					#print("di   ", p.position.distance_squared_to(op.position))
 					#var f = (98000 * p.mass * op.mass) / p.position.distance_squared_to(op.position)

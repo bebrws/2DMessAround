@@ -7,7 +7,6 @@
 absorbent = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x8x32"]
-radius = 9.43397
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pqibw"]
 properties/0/path = NodePath(".:position")
@@ -20,7 +19,7 @@ properties/1/replication_mode = 1
 [node name="StaticPlanet" type="RigidBody2D" groups=["has_gravity", "planet"]]
 mass = 1.26
 physics_material_override = SubResource("PhysicsMaterial_3vig3")
-center_of_mass_mode = 1
+gravity_scale = 1.66533e-16
 script = ExtResource("1_nwhjs")
 radius = 100.0
 
@@ -28,7 +27,6 @@ radius = 100.0
 modulate = Color(0.961332, 0.848917, 0.872881, 1)
 self_modulate = Color(0.545376, 0.544936, 0, 1)
 shape = SubResource("CircleShape2D_x8x32")
-one_way_collision_margin = 5.0
 debug_color = Color(0.192157, 0.45098, 0.580392, 0.839216)
 script = ExtResource("2_mvj85")
 

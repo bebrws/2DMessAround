@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://3xc46isokwjx"]
+[gd_scene load_steps=10 format=3 uid="uid://3xc46isokwjx"]
 
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
-[ext_resource type="PackedScene" uid="uid://c4ax8giwseu36" path="res://StaticPlanet.tscn" id="2_7y42h"]
-[ext_resource type="PackedScene" uid="uid://c7v6u4p8wo82e" path="res://ControllablePlanet.tscn" id="4_n3qrj"]
 [ext_resource type="PackedScene" uid="uid://bsrg884cyea3d" path="res://Player.tscn" id="4_rgqba"]
 [ext_resource type="Script" path="res://MultiplayerSpawner.gd" id="6_4oui1"]
 [ext_resource type="Script" path="res://BulletSpawner.gd" id="6_sd1kn"]
+[ext_resource type="Script" path="res://PlanetSpawner.gd" id="6_urjav"]
 [ext_resource type="Script" path="res://HUDPlayersRect.gd" id="7_3bfqq"]
 [ext_resource type="Script" path="res://TopScoresLabel.gd" id="8_q0dhh"]
 
@@ -21,14 +20,6 @@ font_size = 32
 position = Vector2(2.08165e-12, 2.08165e-12)
 script = ExtResource("1_3pd12")
 player_scene = ExtResource("4_rgqba")
-
-[node name="StaticPlanet" parent="GameRoot" instance=ExtResource("2_7y42h")]
-position = Vector2(782, 499)
-mass = 15.12
-radius = 500.0
-
-[node name="ControllablePlanet" parent="GameRoot" instance=ExtResource("4_n3qrj")]
-position = Vector2(-2634, -3136)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="GameRoot"]
 spawn_path = NodePath("..")
@@ -51,6 +42,10 @@ label_settings = SubResource("LabelSettings_p0nuo")
 [node name="BulletSpawner" type="MultiplayerSpawner" parent="GameRoot"]
 spawn_path = NodePath("..")
 script = ExtResource("6_sd1kn")
+
+[node name="PlanetSpawner" type="MultiplayerSpawner" parent="GameRoot"]
+spawn_path = NodePath("..")
+script = ExtResource("6_urjav")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

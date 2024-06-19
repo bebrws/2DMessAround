@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bdxdojlrm5uuk"]
+[gd_scene load_steps=16 format=3 uid="uid://bdxdojlrm5uuk"]
 
 [ext_resource type="Script" path="res://MultiPlayerShooterPlayerRB.gd" id="1_rmf1d"]
 [ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="2_6txfk"]
@@ -64,8 +64,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vro2"]
-size = Vector2(17.1348, 20)
+[sub_resource type="CircleShape2D" id="CircleShape2D_508ad"]
+custom_solver_bias = 1.0
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8ghht"]
 properties/0/path = NodePath(".:position")
@@ -84,14 +84,24 @@ properties/4/path = NodePath("AnimatedSprite2D:rotation")
 properties/4/spawn = true
 properties/4/replication_mode = 1
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c3yjv"]
+radius = 3.91763
+height = 8.39491
+
 [node name="RigidBody2D" type="RigidBody2D" groups=["has_gravity", "player"]]
 position = Vector2(1, -90)
-mass = 2.66
+mass = 4.0
 physics_material_override = SubResource("PhysicsMaterial_oh064")
 center_of_mass_mode = 1
 center_of_mass = Vector2(2.08167e-16, 2.08167e-16)
 script = ExtResource("1_rmf1d")
 Bullet = ExtResource("2_6txfk")
+
+[node name="RBFootNode" type="Node2D" parent="."]
+position = Vector2(0, 90)
+
+[node name="RBHeadNode" type="Node2D" parent="."]
+position = Vector2(0, -92)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_2ywnm")
@@ -99,25 +109,24 @@ animation = &"walking"
 frame = 5
 frame_progress = 0.722206
 
+[node name="HeadNode" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(-1, -89)
+
+[node name="FootNode" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(-1, 90)
+
+[node name="RightNode" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(61, 0)
+
+[node name="LeftNode" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(-61, 0)
+
+[node name="CenterNode" type="Node2D" parent="AnimatedSprite2D"]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.08165e-12, 0)
 scale = Vector2(7.12, 9.04)
-shape = SubResource("RectangleShape2D_3vro2")
-one_way_collision_margin = 6.0
-
-[node name="HeadNode" type="Node2D" parent="."]
-position = Vector2(-1, -89)
-
-[node name="FootNode" type="Node2D" parent="."]
-position = Vector2(-1, 90)
-
-[node name="RightNode" type="Node2D" parent="."]
-position = Vector2(61, 0)
-
-[node name="LeftNode" type="Node2D" parent="."]
-position = Vector2(-61, 0)
-
-[node name="CenterNode" type="Node2D" parent="."]
+shape = SubResource("CircleShape2D_508ad")
 
 [node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_8ghht")
@@ -130,3 +139,14 @@ offset_top = -121.0
 offset_right = -17.0
 offset_bottom = -98.0
 text = "Player"
+
+[node name="Area2D" type="Area2D" parent="."]
+modulate = Color(1, 0.823529, 0.231373, 0.741176)
+self_modulate = Color(1, 1, 0.666667, 0.823529)
+scale = Vector2(9.23046, -25.0151)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(2, 1)
+shape = SubResource("CapsuleShape2D_c3yjv")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

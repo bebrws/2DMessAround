@@ -28,7 +28,8 @@ func _spawn_new_player(player_info):
 		#spawn_node.global_position.x += 400
 		#player_to_add.global_position.x += len(player_nodes) * 400
 	var new_player = mutiplayer_player_scene.instantiate()
-	new_player.multiplayer_id = player_info["id"]
+	new_player.multiplayer_id = player_info.id
+	new_player.position = player_info.position
 	#if multiplayer.get_unique_id() != 1:
 		#new_player.global_position.x += 400
 	return new_player

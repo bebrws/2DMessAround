@@ -1,5 +1,7 @@
 extends CollisionShape2D
 
+#@export var shape: Shape2D 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	#print(self.get_parent())

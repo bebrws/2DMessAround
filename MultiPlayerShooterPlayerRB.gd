@@ -62,8 +62,8 @@ func _draw():
 	draw_line(Vector2.ZERO, Vector2.ZERO + (gravity * 100.0), Color.GREEN)
 	draw_line(Vector2.ZERO, (self.global_position.direction_to(get_global_mouse_position()).normalized() * -400.0), Color.RED)
 	
-	var fn: Node2D = $FootNode
-	var hn: Node2D = $HeadNode
+	var fn: Node2D = $AnimatedSprite2D/FootNode
+	var hn: Node2D = $AnimatedSprite2D/HeadNode
 	
 	draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)) * 200.0), Color.ORANGE)
 	draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)).rotated(deg_to_rad(180)) * 200.0), Color.CORAL)

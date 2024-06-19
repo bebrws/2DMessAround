@@ -1,5 +1,6 @@
 extends Node
 
+var planets = []
 var players = {}
 var multiplayer_id: int = 1
 
@@ -36,7 +37,9 @@ func SendPlayerInfo(name, id):
 				main = tc
 		var s = main.get_node("GameRoot").get_node("MultiplayerSpawner")
 		print("from ", multiplayer.get_unique_id(), " spawn ", str(id))
-		s.spawn({"id": id})
+		var pi = randi() % len(self.planets)
+		var p = self.planets[pi]
+		s.spawn({"id": id, "position": Vector2(p.position.x, p.position.y + p.radius)})
 
 
 @rpc("any_peer")

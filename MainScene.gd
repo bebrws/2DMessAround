@@ -4,9 +4,56 @@ extends Node2D
 
 @export var player_scene: PackedScene
 	
+var camera: Camera2D
+	
+# Define the space boundaries and parameters
+var planets_width = 10000
+var planets_height = 10000
+var num_planets = 20
+var planets_min_distance = 1000
+var planets_max_attempts = 1000
+var max_planet_radius = 1000
+var min_planet_radius = 200
+# Function to check if a position is valid
+func is_valid_position(planets, x, y, r):
+	for planet in planets:
+		if planet.position.distance_to(Vector2(x, y)) < r + 2 * planet.radius:
+			return false
+	return true
+
+# Generate planet locations
+func generate_planet_locations():
+	var planets = []
+	var attempts = 0
+
+	while len(planets) < num_planets and attempts < planets_max_attempts:
+		var x = randi() % planets_width - planets_width/2 
+		var y = randi() % planets_height - planets_height/2
+		var r = (randi() % max_planet_radius) + min_planet_radius
+		
+		if is_valid_position(planets, x, y, r):
+			planets.append({"position": Vector2(x, y), "radius": r})
+			attempts = 0  # Reset attempts after a successful placement
+		else:
+			attempts += 1
+
+	return planets
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$MPIDLabel.text = str(multiplayer.get_unique_id())
+	randomize()
+	if multiplayer.get_unique_id() == 1:
+		camera = Camera2D.new()
+		#get_tree().root.
+		print(get_tree().root.get_children())
+		get_tree().root.get_node("Root").get_node("GameRoot").add_child(camera)
+		camera.make_current()
+	
+		var planets = generate_planet_locations()
+		GameManager.planets = planets
+		for planet in planets:
+			$PlanetSpawner.spawn(planet)
 	#$MultiplayerSpawner.spawn({"id": 1})
 	#for p in GameManager.players:
 		#var current_player = player_scene.instantiate()
@@ -23,8 +70,16 @@ func _process(delta: float) -> void:
 	if multiplayer.get_unique_id() == 1:
 		GameManager.UpdateAllPlayersInfo()
 		
-		if Input.is_action_just_pressed("ui_accept"): # or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			$PlanetSpawner.spawn()
+		if Input.is_action_pressed("ui_up"):
+			camera.zoom += Vector2.ONE * 0.1
+		if Input.is_action_pressed("ui_down"):
+			camera.zoom -= Vector2.ONE * 0.1
+		if Input.is_action_just_pressed("ui_accept"):
+			#if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			camera.position = get_global_mouse_position()
+			
+		#if Input.is_action_just_pressed("ui_accept"): # or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			#$PlanetSpawner.spawn()
 		
 	#if get_multiplayer_authority() == multiplayer.get_unique_id():
 	var gravs = self.get_tree().get_nodes_in_group("has_gravity")

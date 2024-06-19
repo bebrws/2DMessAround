@@ -3,6 +3,7 @@ extends RigidBody2D
 
 @export var height_from_distance: float = 90.0
 @export var Bullet: PackedScene
+@export var move_speed: float = 100000.0
 
 @export var facing_right = true
 
@@ -208,9 +209,9 @@ func _process(delta: float) -> void:
 			facing_right = true
 			sprite.set_flip_h(false)
 			#var f = force_to_gravity.orthogonal().normalized() * delta * 100000.0
-			var f = cn.global_position.direction_to(rn.global_position) * delta * 100000.0
-			print("right f ", f)
-			print("rot ", sprite.rotation_degrees)
+			var f = cn.global_position.direction_to(rn.global_position) * delta * move_speed
+			#print("right f ", f)
+			#print("rot ", sprite.rotation_degrees)
 			self.apply_central_force(f)
 			
 		#if on_ground && Input.is_action_pressed("ui_left"):
@@ -218,19 +219,19 @@ func _process(delta: float) -> void:
 			facing_right = false
 			sprite.set_flip_h(true)
 			#var f = force_to_gravity.orthogonal().rotated(deg_to_rad(180)).normalized() * delta * 100000.0
-			var f = cn.global_position.direction_to(ln.global_position) * delta * 100000.0
-			print("left f ", f)
-			print("rot ", sprite.rotation_degrees)
+			var f = cn.global_position.direction_to(ln.global_position) * delta * move_speed
+			#print("left f ", f)
+			#print("rot ", sprite.rotation_degrees)
 			self.apply_central_force(f)
 		
 		if Input.is_action_pressed("ui_up"):
-			var f = cn.global_position.direction_to(hn.global_position) * delta * 100000.0
-			print("up f ", f)
+			var f = cn.global_position.direction_to(hn.global_position) * delta * move_speed
+			#print("up f ", f)
 			self.apply_central_force(f)
 			#self.linear_velocity += (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
 		if Input.is_action_pressed("ui_down"):
-			var f = cn.global_position.direction_to(fn.global_position) * delta * 100000.0
-			print("down f ", f)
+			var f = cn.global_position.direction_to(fn.global_position) * delta * move_speed
+			#print("down f ", f)
 			self.apply_central_force(f)
 			#self.linear_velocity -= (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
 			

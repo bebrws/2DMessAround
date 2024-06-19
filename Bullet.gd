@@ -20,7 +20,9 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	#print(multiplayer.get_unique_id(), " - Bulllet collison ", body.name, " - body ", body["multiplayer_id"], " shooter ", self.shooter_multiplayer_id)
-	if body.is_in_group("player") && body.multiplayer_id != self.shooter_multiplayer_id:
+	if not (body.is_in_group("player") && body.multiplayer_id == self.shooter_multiplayer_id):
 		queue_free()
+		if body.is_in_group("player") && body.multiplayer_id != self.shooter_multiplayer_id:
+			GameManager.players[self.shooter_multiplayer_id].score += 1
 	
 	

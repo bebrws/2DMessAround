@@ -19,9 +19,12 @@ func _process(delta: float) -> void:
 @rpc("any_peer")
 func SendPlayerInfo(name, id):
 	print(multiplayer.get_unique_id(), " - Send Player Info called name ", name, " id ", id)
+	var name_or_id = name
+	if name == "":
+		name_or_id = str(id)
 	if multiplayer.get_unique_id() == 1 and !self.players.has(id):
 		self.players[id] = {
-			"name": name,
+			"name": name_or_id,
 			"id": id,
 			"score": 0,
 			"bullets": [],

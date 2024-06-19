@@ -5,15 +5,19 @@ extends Label
 func _ready() -> void:
 	pass # Replace with function body.
 
+func _sort_by_score(p1, p2):
+	if p1.score > p2.score:
+		return true
+	return false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var scores: Array = []
+	var players: Array = []
 	#print("players ", GameManager.players)
 	for pi in GameManager.players:
 		var p = GameManager.players[pi]
-		scores.push_back(p.score)
-	scores.sort()
+		players.push_back(p)
+	players.sort_custom(Callable(_sort_by_score))
 	#print("sorted scores ", scores)
 	var scores_str = "Scores:\n"
 	var player_count = len(GameManager.players)
@@ -21,8 +25,8 @@ func _process(delta: float) -> void:
 	if player_count < 3:
 		scores_to_show = player_count
 	for i in range(scores_to_show):
-		var cur_score = scores.pop_front()
+		var cur_player = players.pop_front()
 		#print("popped score ", cur_score)
-		scores_str += "Score: " + str(cur_score) + "\n"
+		scores_str += cur_player.name + " score: " + str(cur_player.score) + "\n"
 	#print("scores_str: ", scores_str)
 	self.text = scores_str

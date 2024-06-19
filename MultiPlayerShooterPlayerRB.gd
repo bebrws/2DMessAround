@@ -63,7 +63,7 @@ func _ready() -> void:
 
 @rpc("any_peer")
 func _shoot_bullet(from_id, bullet_direction, position, linear_velocity):
-	print("mpid ", multiplayer.get_unique_id(), " shooting for ", from_id, " pos ", position)
+	#print("mpid ", multiplayer.get_unique_id(), " shooting for ", from_id, " pos ", position)
 	if last_shot_time + 100 < Time.get_ticks_msec():
 		last_shot_time = Time.get_ticks_msec()
 		#var main = get_tree().root.get_children()[3]

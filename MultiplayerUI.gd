@@ -2,9 +2,6 @@ extends Control
 
 # https://www.youtube.com/watch?v=e0JLO_5UgQo
 
-@export var address = "localhost"
-@export var port = 8920
-var websocket_addr = "ws://" + address  + ":" + str(port)
 
 var main_scene: PackedScene = preload("res://MainScene.tscn")
 var main_inst: Node = null
@@ -31,30 +28,13 @@ func _ready() -> void:
 	multiplayer.peer_disconnected.connect(PlayerDisconnected)
 	multiplayer.connected_to_server.connect(PlayerConnectedToServer)
 	multiplayer.connection_failed.connect(PlayerConnectionFailed)
-
-#@rpc("any_peer", "call_local")
-func StartGame():
-	print("Start Game Called ", multiplayer.get_unique_id())
-	self.hide()
-	get_tree().root.add_child(main_inst)
-	var main = get_tree().root.get_children()[3]
-	print(main)
-	for p in GameManager.players:
-		var s = main.get_node("GameRoot").get_node("MultiplayerSpawner")
-		print(s)
-		print("from ", multiplayer.get_unique_id(), " spawn ", str(GameManager.players[p].id))
-		s.spawn({"id": GameManager.players[p].id})
-	
-	#main_inst.owner = get_tree().root
-	#main_inst.show()
-	#get_tree().root.add_child(main_inst)
-	#var first_child = get_tree().root.get_child(1)
-	#first_child.show()
-	#get_tree().root.get_child()
+	multiplayer.server_disconnected.connect(ServerDisconnected)
 	
 
-	
 
+	
+func ServerDisconnected():
+	print("BEB GOT SERVER DISCONNECTED")
 # Gets fired only from clients
 func PlayerConnectedToServer(id):
 	print("Player connected to server: ", id)
@@ -62,10 +42,14 @@ func PlayerConnectedToServer(id):
 # Gets fired only from clients
 func PlayerConnectionFailed(id):
 	print("Player connection failed: ", id)
-
+	GameManager.SendDeletePlayerInfo.rpc_id(1, id)
+	GameManager.SendDeletePlayerInfo(id)
+	
 # Gets fired on both server and client
 func PlayerDisconnected(id):
 	print("Player disconnected: ", id)
+	GameManager.SendDeletePlayerInfo.rpc_id(1, id)
+	GameManager.SendDeletePlayerInfo(id)
 
 # Gets fired on both server and client
 func PlayerConnected(id):
@@ -78,34 +62,14 @@ func PlayerConnected(id):
 
 func _process(delta: float) -> void:
 	pass
-	#if is_server:
-		#server.poll()
 
-#
-#func _on_start_game_button_down() -> void:
-	#print("Start Game button down ", multiplayer.get_unique_id())
-	##StartGame.rpc()
-
-
-func _on_host_button_down() -> void:
-	is_server = true
-	var error = peer.create_server(port)
-	if error != OK:
-		print("Cannot host: ", error)
-		return
-	
-	multiplayer.set_multiplayer_peer(peer)
-	
-	GameManager.multiplayer_id = multiplayer.get_unique_id()
-	
-	self.hide()
-	get_tree().root.add_child(main_inst)
-	
-	print("***** CREATED SERVER *****")
-	
 
 
 func _on_join_button_down() -> void:
+	var address = GameManager.address
+	if $Address.text != "":
+		address = $Address.text
+	var websocket_addr = "ws://" + address  + ":" + str(GameManager.port)
 	print("starting join to ", websocket_addr)
 	#peer = ENetMultiplayerPeer.new()
 	peer.create_client(websocket_addr)

@@ -99,7 +99,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if multiplayer.get_unique_id() == 1:
-		GameManager.UpdateAllPlayersInfo()
+		if len(GameManager.players) != 0:
+			GameManager.UpdateAllPlayersInfo()
 		
 		if Input.is_action_pressed("ui_up"):
 			camera.zoom += Vector2.ONE * 0.1

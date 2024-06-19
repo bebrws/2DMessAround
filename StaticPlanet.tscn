@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4ax8giwseu36"]
+[gd_scene load_steps=7 format=3 uid="uid://c4ax8giwseu36"]
 
 [ext_resource type="Script" path="res://StaticPlanet.gd" id="1_nwhjs"]
 [ext_resource type="Script" path="res://CircleCollisionShape2D.gd" id="2_mvj85"]
+[ext_resource type="Texture2D" uid="uid://ci8w70l01ydhv" path="res://planet.svg" id="3_fc84s"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3vig3"]
 absorbent = true
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x8x32"]
+resource_local_to_scene = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pqibw"]
 properties/0/path = NodePath(".:position")
@@ -34,5 +36,8 @@ debug_color = Color(0.192157, 0.45098, 0.580392, 0.839216)
 script = ExtResource("2_mvj85")
 
 [node name="StaticPlanetSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_interval = 0.013
 replication_config = SubResource("SceneReplicationConfig_pqibw")
+
+[node name="PlanetSprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.00767377, 0.00767377)
+texture = ExtResource("3_fc84s")

@@ -1,7 +1,7 @@
 extends MultiplayerSpawner
 
 var planet_scene: PackedScene = preload("res://StaticPlanet.tscn")
-var planets = []
+#var planets = []
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var _spawn_callable : Callable = Callable(_spawn)
@@ -25,7 +25,7 @@ func _spawn(info):
 		#p.position = Vector2(780, 500)
 	#else:
 		#p.position = get_viewport().get_mouse_position()
-	planets.push_back(p)
+	#planets.push_back(p)
 	#get_viewport().get_mouse_position()
 	#print(get_viewport().get_mouse_position())
 	#print("Spawn new planet at ", p.position)

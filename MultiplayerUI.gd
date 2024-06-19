@@ -56,6 +56,7 @@ func PlayerConnected(id):
 	print("Player connected: ", id)
 	GameManager.SendPlayerInfo.rpc_id(1, $Name.text, multiplayer.get_unique_id())
 	GameManager.multiplayer_id = multiplayer.get_unique_id()
+	print("Got player len - ", len(GameManager.players))
 	
 
 

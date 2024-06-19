@@ -56,6 +56,10 @@ func _process(delta: float) -> void:
 func SendDeletePlayerInfo(id):
 	print(multiplayer.get_unique_id(), " - Send Delete Player Info id ", id)
 	if multiplayer.get_unique_id() == 1:
+		var player_nodes = get_tree().get_nodes_in_group("player")
+		for pn in player_nodes:
+			if pn.multiplayer_id == id:
+				pn.RemoveFromGame()
 		self.players.erase(id)
 		
 	
@@ -66,6 +70,7 @@ func SendPlayerInfo(name, id):
 	if name == "":
 		name_or_id = str(id)
 	if multiplayer.get_unique_id() == 1 and !self.players.has(id):
+		print("Len of players is - ", len(self.players))
 		self.players[id] = {
 			"name": name_or_id,
 			"id": id,

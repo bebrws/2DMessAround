@@ -148,6 +148,7 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	self.linear_velocity = Vector2.ZERO
-	self.constant_force = Vector2.ZERO
-	self.constant_torque = 0.0
+	#self.linear_velocity = Vector2.ZERO
+	#self.constant_force = Vector2.ZERO
+	#self.constant_torque = 0.0
+	pass

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://qiex2dake2bg"]
+
+[ext_resource type="Script" path="res://boundaryAread2D.gd" id="1_ncv5s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5gdv"]
+resource_local_to_scene = true
+size = Vector2(10, 10)
+
+[node name="Boundary" type="Area2D"]
+position = Vector2(-2.08165e-12, -2.08165e-12)
+script = ExtResource("1_ncv5s")
+
+[node name="BoundaryCollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color(0.303355, 0.418714, 0.307803, 0.713726)
+self_modulate = Color(0.611765, 0, 0.615686, 0.713726)
+shape = SubResource("RectangleShape2D_d5gdv")

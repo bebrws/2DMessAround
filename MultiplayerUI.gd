@@ -69,7 +69,7 @@ func _on_join_button_down() -> void:
 	var address = GameManager.address
 	if $Address.text != "":
 		address = $Address.text
-	var websocket_addr = "ws://" + address  + ":" + str(GameManager.port)
+	var websocket_addr = "wss://" + address  + ":" + str(GameManager.port)
 	print("starting join to ", websocket_addr)
 	#peer = ENetMultiplayerPeer.new()
 	peer.create_client(websocket_addr)

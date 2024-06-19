@@ -48,6 +48,6 @@ offset_left = 495.0
 offset_top = 98.0
 offset_right = 802.0
 offset_bottom = 220.0
-text = "52.27.195.58"
+text = "zkpf.io"
 
 [connection signal="button_down" from="Join" to="." method="_on_join_button_down"]

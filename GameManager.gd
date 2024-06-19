@@ -4,16 +4,26 @@ var planets = []
 var players = {}
 var multiplayer_id: int = 1
 
-var address = "52.27.195.58"
-var port = 8920
+var address = "zkpf.io" #"52.27.195.58"
+var port = 443
 var peer := WebSocketMultiplayerPeer.new()
+
+var tls_cert := X509Certificate.new()
+var tls_key := CryptoKey.new()
+
 
 #var mutiplayer_scene = preload("res://MultiPlayerPlayer.tscn")
 #var soawn_node = get_tree().get_current_scene().get_node("SpawnNode")
 
 func HostWSServer() -> void:
 	print("Detected running as server so starting websocket server:")
-	var error = peer.create_server(port)
+	
+	tls_cert.load("/etc/letsencrypt/live/zkpf.io/fullchain.pem")
+	tls_key.load("/etc/letsencrypt/live/zkpf.io/privkey.pem")
+		
+	var server_tls_options = TLSOptions.server(tls_key, tls_cert)
+	var error = peer.create_server(port, "*", server_tls_options)
+	
 	if error != OK:
 		print("Cannot host: ", error)
 		return

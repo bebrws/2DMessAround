@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://MainScene.gd" id="1_3pd12"]
 [ext_resource type="PackedScene" uid="uid://bsrg884cyea3d" path="res://Player.tscn" id="4_rgqba"]
 [ext_resource type="Script" path="res://MultiplayerSpawner.gd" id="6_4oui1"]
+[ext_resource type="PackedScene" uid="uid://qiex2dake2bg" path="res://boundary.tscn" id="6_bw158"]
 [ext_resource type="Script" path="res://BulletSpawner.gd" id="6_sd1kn"]
 [ext_resource type="Script" path="res://PlanetSpawner.gd" id="6_urjav"]
 [ext_resource type="Script" path="res://HUDPlayersRect.gd" id="7_3bfqq"]
@@ -10,9 +11,6 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_p0nuo"]
 font_size = 38
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5gdv"]
-resource_local_to_scene = true
 
 [sub_resource type="LabelSettings" id="LabelSettings_ckf0p"]
 font_size = 32
@@ -50,11 +48,7 @@ script = ExtResource("6_sd1kn")
 spawn_path = NodePath("..")
 script = ExtResource("6_urjav")
 
-[node name="Area2D" type="Area2D" parent="GameRoot"]
-position = Vector2(-2.08165e-12, -2.08165e-12)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameRoot/Area2D"]
-shape = SubResource("RectangleShape2D_d5gdv")
+[node name="Boundary" parent="GameRoot" instance=ExtResource("6_bw158")]
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

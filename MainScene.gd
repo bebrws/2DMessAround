@@ -6,7 +6,11 @@ extends Node2D
 	
 var camera: Camera2D
 	
+var boundary_scene: PackedScene = preload("res://boundary.tscn")
+
 # Define the space boundaries and parameters
+var game_width = 10000 + 2500
+var game_height = 10000 + 2500
 var planets_width = 10000
 var planets_height = 10000
 var num_planets = 20
@@ -14,6 +18,7 @@ var planets_min_distance = 1000
 var planets_max_attempts = 1000
 var max_planet_radius = 1000
 var min_planet_radius = 200
+var boundary_width = 200.0
 # Function to check if a position is valid
 func is_valid_position(planets, x, y, r):
 	for planet in planets:
@@ -41,6 +46,32 @@ func generate_planet_locations():
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	var gr = get_tree().root.get_node("Root").get_node("GameRoot")
+	
+	var bb = boundary_scene.instantiate()
+	bb.width = game_width
+	bb.height = boundary_width
+	bb.position = Vector2(0.0, game_height/2)
+	gr.add_child(bb)
+	
+	var bl = boundary_scene.instantiate()
+	bl.width = boundary_width
+	bl.height = game_height
+	bl.position = Vector2(-game_width/2, 0.0)
+	gr.add_child(bl)
+	
+	var br = boundary_scene.instantiate()
+	br.width = boundary_width
+	br.height = game_height
+	br.position = Vector2(game_width/2, 0.0)
+	gr.add_child(br)	
+	
+	var bt = boundary_scene.instantiate()
+	bt.width = game_width
+	bt.height = boundary_width
+	bt.position = Vector2(0.0, -game_height/2)
+	gr.add_child(bt)
+		
 	$MPIDLabel.text = str(multiplayer.get_unique_id())
 	randomize()
 	if multiplayer.get_unique_id() == 1:

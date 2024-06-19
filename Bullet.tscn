@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://BulletCollisionShape2D.gd" id="3_14ey1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_278iv"]
+resource_local_to_scene = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_wgfn2"]
 properties/0/path = NodePath(".:position")

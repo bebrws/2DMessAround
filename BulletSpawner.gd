@@ -31,5 +31,7 @@ func _spawn_new_player(info):
 	b.shooter_multiplayer_id = info.from_id
 	b.bullet_direction = info.bullet_direction
 	b.position = info.position
+	var lvv: Vector2 = info.linear_velocity
+	b.linear_velocity_length = lvv.length()
 	return b
 	

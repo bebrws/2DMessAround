@@ -4,17 +4,21 @@ extends Area2D
 @export var bullet_direction: Vector2 = Vector2(0.0,0.0)
 #@export var creator: Node2D = null
 @export var shooter_multiplayer_id: int = 1
+@export var linear_velocity_length: float = 1.0
 
 func _physics_process(delta):
-	position += bullet_direction * speed * delta
+	position +=  bullet_direction * (speed + linear_velocity_length) * delta
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
+#func _draw() -> void:
+	#draw_circle(Vector2.ZERO, 20.0, Color.WHITE)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	#self.queue_redraw()
 	pass
 
 

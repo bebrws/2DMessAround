@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://d4m6556x1e6c"]
+[gd_scene load_steps=6 format=3 uid="uid://d4m6556x1e6c"]
 
 [ext_resource type="Script" path="res://Bullet.gd" id="1_8var0"]
 [ext_resource type="Texture2D" uid="uid://cp0vpvt7be1nx" path="res://Bullet.png" id="1_d14nt"]
+[ext_resource type="Script" path="res://BulletCollisionShape2D.gd" id="3_14ey1"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_278iv"]
 
@@ -21,9 +22,10 @@ script = ExtResource("1_8var0")
 scale = Vector2(10, 10)
 texture = ExtResource("1_d14nt")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="BulletCollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(9.9525, 9.9525)
 shape = SubResource("CircleShape2D_278iv")
+script = ExtResource("3_14ey1")
 
 [node name="BulletSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_wgfn2")

@@ -1,14 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://qiex2dake2bg"]
 
-[ext_resource type="Script" path="res://boundaryAread2D.gd" id="1_ncv5s"]
+[ext_resource type="Script" path="res://BoundaryStaticBody2D.gd" id="1_8608e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d5gdv"]
 resource_local_to_scene = true
 size = Vector2(10, 10)
 
-[node name="Boundary" type="Area2D"]
-position = Vector2(-2.08165e-12, -2.08165e-12)
-script = ExtResource("1_ncv5s")
+[node name="BoundaryStaticBody2D" type="StaticBody2D"]
+script = ExtResource("1_8608e")
 
 [node name="BoundaryCollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color(0.303355, 0.418714, 0.307803, 0.713726)

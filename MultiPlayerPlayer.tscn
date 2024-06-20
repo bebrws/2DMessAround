@@ -1,74 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://bdxdojlrm5uuk"]
+[gd_scene load_steps=8 format=3 uid="uid://bdxdojlrm5uuk"]
 
 [ext_resource type="Script" path="res://MultiPlayerShooterPlayerRB.gd" id="1_rmf1d"]
 [ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="2_6txfk"]
-[ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="3_2t5te"]
-[ext_resource type="Shader" path="res://MultiPlayerPlayerFireShader.gdshader" id="4_tbyq1"]
-[ext_resource type="Texture2D" uid="uid://brvpw1y03cu4v" path="res://SingleFire.png" id="5_ph8mc"]
+[ext_resource type="Texture2D" uid="uid://crgm4pjh4ywu" path="res://triangle.svg" id="3_h4c46"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oh064"]
 absorbent = true
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vpage"]
-atlas = ExtResource("3_2t5te")
-region = Rect2(0, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jp17y"]
-atlas = ExtResource("3_2t5te")
-region = Rect2(145, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_m7bs1"]
-atlas = ExtResource("3_2t5te")
-region = Rect2(290, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tj0kw"]
-atlas = ExtResource("3_2t5te")
-region = Rect2(435, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fn66p"]
-atlas = ExtResource("3_2t5te")
-region = Rect2(580, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pb6tc"]
-atlas = ExtResource("3_2t5te")
-region = Rect2(725, 0, 120, 180)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3wjyj"]
-atlas = ExtResource("3_2t5te")
-region = Rect2(870, 0, 120, 180)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_2ywnm"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vpage")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jp17y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_m7bs1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tj0kw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fn66p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pb6tc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3wjyj")
-}],
-"loop": true,
-"name": &"walking",
-"speed": 5.0
-}]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bwson"]
-shader = ExtResource("4_tbyq1")
-shader_parameter/rotation = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_508ad"]
 custom_solver_bias = 1.0
@@ -109,36 +46,6 @@ position = Vector2(0, 90)
 [node name="RBHeadNode" type="Node2D" parent="."]
 position = Vector2(0, -92)
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_2ywnm")
-animation = &"walking"
-frame = 5
-frame_progress = 0.722206
-
-[node name="HeadNode" type="Node2D" parent="AnimatedSprite2D"]
-position = Vector2(-1, -89)
-
-[node name="FootNode" type="Node2D" parent="AnimatedSprite2D"]
-position = Vector2(-1, 90)
-
-[node name="RightNode" type="Node2D" parent="AnimatedSprite2D"]
-position = Vector2(61, 0)
-
-[node name="LeftNode" type="Node2D" parent="AnimatedSprite2D"]
-position = Vector2(-61, 0)
-
-[node name="CenterNode" type="Node2D" parent="AnimatedSprite2D"]
-
-[node name="FireParticles2D" type="CPUParticles2D" parent="AnimatedSprite2D"]
-material = SubResource("ShaderMaterial_bwson")
-position = Vector2(0, 97)
-amount = 50
-lifetime = 0.5
-texture = ExtResource("5_ph8mc")
-emission_shape = 1
-emission_sphere_radius = 20.0
-gravity = Vector2(2.08165e-12, 2.08165e-12)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.08165e-12, 0)
 scale = Vector2(7.12, 9.04)
@@ -163,7 +70,26 @@ self_modulate = Color(1, 1, 0.666667, 0.823529)
 scale = Vector2(9.23046, -25.0151)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-scale = Vector2(2, 1)
+scale = Vector2(3, 1)
 shape = SubResource("CapsuleShape2D_c3yjv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, -10)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_h4c46")
+
+[node name="HeadNode" type="Node2D" parent="Sprite2D"]
+position = Vector2(-1, -244)
+
+[node name="FootNode" type="Node2D" parent="Sprite2D"]
+position = Vector2(2.08165e-12, 249)
+
+[node name="RightNode" type="Node2D" parent="Sprite2D"]
+position = Vector2(129, 2.08165e-12)
+
+[node name="LeftNode" type="Node2D" parent="Sprite2D"]
+position = Vector2(-133, 2.08165e-12)
+
+[node name="CenterNode" type="Node2D" parent="Sprite2D"]
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -20,12 +20,12 @@ var last_shot_time: int = 0
 @onready var rbfn: Node2D = $RBFootNode
 @onready var rbhn: Node2D = $RBHeadNode
 
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var fn: Node2D = $AnimatedSprite2D/FootNode
-@onready var hn: Node2D = $AnimatedSprite2D/HeadNode
-@onready var cn: Node2D = $AnimatedSprite2D/CenterNode
-@onready var ln: Node2D = $AnimatedSprite2D/LeftNode
-@onready var rn: Node2D = $AnimatedSprite2D/RightNode
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var fn: Node2D = $Sprite2D/FootNode
+@onready var hn: Node2D = $Sprite2D/HeadNode
+@onready var cn: Node2D = $Sprite2D/CenterNode
+@onready var ln: Node2D = $Sprite2D/LeftNode
+@onready var rn: Node2D = $Sprite2D/RightNode
 
 func calculate_gravity_force() -> Vector2:
 	var sum := Vector2.ZERO
@@ -43,8 +43,6 @@ func calculate_gravity_force() -> Vector2:
 	#draw_line(Vector2.ZERO, Vector2.ZERO + (gravity * 100.0), Color.GREEN)
 	#draw_line(Vector2.ZERO, (self.global_position.direction_to(get_global_mouse_position()).normalized() * -400.0), Color.RED)
 	#
-	#var fn: Node2D = $AnimatedSprite2D/FootNode
-	#var hn: Node2D = $AnimatedSprite2D/HeadNode
 	#
 	#draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)) * 200.0), Color.ORANGE)
 	#draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)).rotated(deg_to_rad(180)) * 200.0), Color.CORAL)
@@ -78,19 +76,10 @@ func _process(delta: float) -> void:
 	if self.multiplayer_id == multiplayer.get_unique_id():
 		camera.global_position = self.global_position
 			
-	var f2h = rbfn.global_position.direction_to(rbhn.global_position)
 	var f2d = calculate_gravity_force()
 	#var p = get_tree().get_nodes_in_group("has_gravity")[0]
 	#var gv = fn.global_position.direction_to(p.global_position)
 	var gv = rbfn.global_position.direction_to(rbfn.global_position + f2d)
-	
-	#print("f2h ", f2h, " gv  ", gv)
-	
-	var r = f2h.angle_to(gv)
-	#print(r)
-	#sprite.rotate(r)
-	sprite.set_rotation(r + deg_to_rad(180))
-	
 	
 
 	if self.multiplayer_id == multiplayer.get_unique_id():		
@@ -104,81 +93,55 @@ func _process(delta: float) -> void:
 				on_ground = true
 		#print("on_ground  ", on_ground)
 
-		var moving_use_particles = false
-		var fp: CPUParticles2D = $AnimatedSprite2D/FireParticles2D
-		fp.gravity = Vector2(0.0, 0.0)
 		#if on_ground && Input.is_action_pressed("ui_right"):
 		#print("b fp amount ", fp.amount)
 		#fp.amount = 0
 		#print("a fp amount ", fp.amount)
 		#if Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
 			#fp.amount = 0
-			
-		if Input.is_action_just_pressed("ui_right"):
-			fp.position = $AnimatedSprite2D/LeftNode.position
-			fp.material.set("shader_paramater/rotation", 1.5)
-			fp.amount = 50
-			fp.gravity.x = -980.0
+
 		if Input.is_action_pressed("ui_right"):
-			moving_use_particles = true
 			facing_right = true
 			sprite.set_flip_h(false)
 			#var f = force_to_gravity.orthogonal().normalized() * delta * 100000.0
 			var f = cn.global_position.direction_to(rn.global_position) * delta * move_speed
 			#print("right f ", f)
 			#print("rot ", sprite.rotation_degrees)
-			self.apply_central_force(f)
-			
+			#self.apply_central_force(f)
+			sprite.set_rotation(deg_to_rad(sprite.rotation_degrees + 4))
 		
-		if Input.is_action_just_pressed("ui_left"):
-			fp.position = $AnimatedSprite2D/RightNode.position
-			fp.material.set("shader_paramater/rotation", -1.5)
-			fp.amount = 50
-			fp.gravity.x = -980.0
 		if Input.is_action_pressed("ui_left"):
-			moving_use_particles = true
 			facing_right = false
 			sprite.set_flip_h(true)
 			#var f = force_to_gravity.orthogonal().rotated(deg_to_rad(180)).normalized() * delta * 100000.0
 			var f = cn.global_position.direction_to(ln.global_position) * delta * move_speed
 			#print("left f ", f)
 			#print("rot ", sprite.rotation_degrees)
-			self.apply_central_force(f)
+			#self.apply_central_force(f)
+			sprite.set_rotation(deg_to_rad(sprite.rotation_degrees - 4))
 		
-		if Input.is_action_just_pressed("ui_up"):
-			fp.position = $AnimatedSprite2D/FootNode.position
-			fp.material.set("shader_paramater/rotation", 0.0)
-			fp.amount = 50
-			fp.gravity.y = 980.0
+
 		if Input.is_action_pressed("ui_up"):
-			moving_use_particles = true
 			var f = cn.global_position.direction_to(hn.global_position) * delta * move_speed * booster_speed
 			#print("up f ", f)
 			self.apply_central_force(f)
 			#self.linear_velocity += (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
-			
-		if Input.is_action_just_pressed("ui_down"):
-			fp.position = $AnimatedSprite2D/HeadNode.position
-			fp.material.set("shader_paramater/rotation", 3.0)
-			fp.amount = 50
-			fp.gravity.y = 980.0			
+	
 		if Input.is_action_pressed("ui_down"):
-			moving_use_particles = true
 			var f = cn.global_position.direction_to(fn.global_position) * delta * move_speed * booster_speed
 			#print("down f ", f)
 			self.apply_central_force(f)
 			#self.linear_velocity -= (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
 			
-		if Input.is_action_just_pressed("ui_accept") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		if Input.is_action_pressed("ui_accept") or Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			#print("shoot")
-			var bullet_direction = self.global_position.direction_to(get_global_mouse_position()).normalized()
+			#var bullet_direction = self.global_position.direction_to(get_global_mouse_position()).normalized()
+			var bullet_direction = cn.global_position.direction_to(hn.global_position)
 			if multiplayer.get_unique_id() != 1:
-				_shoot_bullet.rpc_id(1, self.multiplayer_id, bullet_direction, self.position, self.linear_velocity)
+				_shoot_bullet.rpc_id(1, self.multiplayer_id, bullet_direction, hn.global_position, self.linear_velocity)
 			else:
-				_shoot_bullet(1, bullet_direction, self.position, self.linear_velocity)
-		
-		if not moving_use_particles:
-			fp.amount = 0
+				_shoot_bullet(1, bullet_direction, hn.global_position, self.linear_velocity)
+
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	#self.linear_velocity = Vector2.ZERO
 	#self.constant_force = Vector2.ZERO

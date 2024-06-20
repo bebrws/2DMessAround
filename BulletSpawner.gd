@@ -32,6 +32,7 @@ func _spawn_new_player(info):
 	b.bullet_direction = info.bullet_direction
 	b.position = info.position
 	var lvv: Vector2 = info.linear_velocity
-	b.linear_velocity_length = lvv.length()
+	#b.linear_velocity_length = lvv.length()
+	b.linear_velocity_length = 0.0
 	return b
 	

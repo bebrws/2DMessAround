@@ -12,10 +12,10 @@ vec2 rotateUV(vec2 uv, vec2 pivot) {
 	) + pivot;
 }
 
-//void vertex() {
-	//VERTEX = rotateUV(VERTEX, 0.5/TEXTURE_PIXEL_SIZE);
+void vertex() {
+	VERTEX = rotateUV(VERTEX, 0.5/TEXTURE_PIXEL_SIZE);
 	//VERTEX.y = VERTEX.y + (TIME/5.1);
-//}
+}
 
 
 void fragment() {

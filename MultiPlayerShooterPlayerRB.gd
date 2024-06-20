@@ -37,17 +37,17 @@ func calculate_gravity_force() -> Vector2:
 	var gravity: Vector2 = self.mass * sum
 	return gravity
 
-func _draw():
-	var gravity = calculate_gravity_force()
-	
-	draw_line(Vector2.ZERO, Vector2.ZERO + (gravity * 100.0), Color.GREEN)
-	draw_line(Vector2.ZERO, (self.global_position.direction_to(get_global_mouse_position()).normalized() * -400.0), Color.RED)
-	
-	var fn: Node2D = $AnimatedSprite2D/FootNode
-	var hn: Node2D = $AnimatedSprite2D/HeadNode
-	
-	draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)) * 200.0), Color.ORANGE)
-	draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)).rotated(deg_to_rad(180)) * 200.0), Color.CORAL)
+#func _draw():
+	#var gravity = calculate_gravity_force()
+	#
+	#draw_line(Vector2.ZERO, Vector2.ZERO + (gravity * 100.0), Color.GREEN)
+	#draw_line(Vector2.ZERO, (self.global_position.direction_to(get_global_mouse_position()).normalized() * -400.0), Color.RED)
+	#
+	#var fn: Node2D = $AnimatedSprite2D/FootNode
+	#var hn: Node2D = $AnimatedSprite2D/HeadNode
+	#
+	#draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)) * 200.0), Color.ORANGE)
+	#draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)).rotated(deg_to_rad(180)) * 200.0), Color.CORAL)
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
@@ -71,7 +71,7 @@ func _shoot_bullet(from_id, bullet_direction, position, linear_velocity):
 	
 	
 func _process(delta: float) -> void:
-	self.queue_redraw()
+	#self.queue_redraw()
 	#if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
 	#print("self: ", self.multiplayer_id, " GameManager ", GameManager.multiplayer_id)
 	#if self.multiplayer_id == GameManager.multiplayer_id:
@@ -104,9 +104,9 @@ func _process(delta: float) -> void:
 				on_ground = true
 		#print("on_ground  ", on_ground)
 
-		
+		var moving_use_particles = false
 		var fp: CPUParticles2D = $AnimatedSprite2D/FireParticles2D
-		fp.gravity.y = 980.0
+		fp.gravity = Vector2(0.0, 0.0)
 		#if on_ground && Input.is_action_pressed("ui_right"):
 		#print("b fp amount ", fp.amount)
 		#fp.amount = 0
@@ -114,12 +114,13 @@ func _process(delta: float) -> void:
 		#if Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
 			#fp.amount = 0
 			
-		if Input.is_action_pressed("ui_right"):
+		if Input.is_action_just_pressed("ui_right"):
 			fp.position = $AnimatedSprite2D/LeftNode.position
 			fp.material.set("shader_paramater/rotation", 1.5)
 			fp.amount = 50
-			fp.gravity.x = 980.0
-				
+			fp.gravity.x = -980.0
+		if Input.is_action_pressed("ui_right"):
+			moving_use_particles = true
 			facing_right = true
 			sprite.set_flip_h(false)
 			#var f = force_to_gravity.orthogonal().normalized() * delta * 100000.0
@@ -128,11 +129,14 @@ func _process(delta: float) -> void:
 			#print("rot ", sprite.rotation_degrees)
 			self.apply_central_force(f)
 			
-		#if on_ground && Input.is_action_pressed("ui_left"):
-		if Input.is_action_pressed("ui_left"):
+		
+		if Input.is_action_just_pressed("ui_left"):
 			fp.position = $AnimatedSprite2D/RightNode.position
-			fp.material.set("shader_paramater/rotation", 1.5)
-			fp.amount = 50			
+			fp.material.set("shader_paramater/rotation", -1.5)
+			fp.amount = 50
+			fp.gravity.x = -980.0
+		if Input.is_action_pressed("ui_left"):
+			moving_use_particles = true
 			facing_right = false
 			sprite.set_flip_h(true)
 			#var f = force_to_gravity.orthogonal().rotated(deg_to_rad(180)).normalized() * delta * 100000.0
@@ -141,12 +145,25 @@ func _process(delta: float) -> void:
 			#print("rot ", sprite.rotation_degrees)
 			self.apply_central_force(f)
 		
+		if Input.is_action_just_pressed("ui_up"):
+			fp.position = $AnimatedSprite2D/FootNode.position
+			fp.material.set("shader_paramater/rotation", 0.0)
+			fp.amount = 50
+			fp.gravity.y = 980.0
 		if Input.is_action_pressed("ui_up"):
+			moving_use_particles = true
 			var f = cn.global_position.direction_to(hn.global_position) * delta * move_speed * booster_speed
 			#print("up f ", f)
 			self.apply_central_force(f)
 			#self.linear_velocity += (self.global_position.direction_to(get_global_mouse_position()).normalized() * 50.0)
+			
+		if Input.is_action_just_pressed("ui_down"):
+			fp.position = $AnimatedSprite2D/HeadNode.position
+			fp.material.set("shader_paramater/rotation", 3.0)
+			fp.amount = 50
+			fp.gravity.y = 980.0			
 		if Input.is_action_pressed("ui_down"):
+			moving_use_particles = true
 			var f = cn.global_position.direction_to(fn.global_position) * delta * move_speed * booster_speed
 			#print("down f ", f)
 			self.apply_central_force(f)
@@ -160,7 +177,8 @@ func _process(delta: float) -> void:
 			else:
 				_shoot_bullet(1, bullet_direction, self.position, self.linear_velocity)
 		
-
+		if not moving_use_particles:
+			fp.amount = 0
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	#self.linear_velocity = Vector2.ZERO
 	#self.constant_force = Vector2.ZERO

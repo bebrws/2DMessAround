@@ -50,9 +50,7 @@ func _draw():
 	draw_line(Vector2.ZERO, Vector2.ZERO + (gravity.orthogonal().normalized().rotated(deg_to_rad(-30)).rotated(deg_to_rad(180)) * 200.0), Color.CORAL)
 	
 # Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	#$InputSynchronizer.root_path = $"../../"
-	
+func _ready() -> void:	
 	$Label.text = str(self.multiplayer_id)
 	if self.multiplayer_id == multiplayer.get_unique_id():
 		camera.enabled = true
@@ -107,8 +105,21 @@ func _process(delta: float) -> void:
 		#print("on_ground  ", on_ground)
 
 		
+		var fp: CPUParticles2D = $AnimatedSprite2D/FireParticles2D
+		fp.gravity.y = 980.0
 		#if on_ground && Input.is_action_pressed("ui_right"):
+		#print("b fp amount ", fp.amount)
+		#fp.amount = 0
+		#print("a fp amount ", fp.amount)
+		#if Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_right"):
+			#fp.amount = 0
+			
 		if Input.is_action_pressed("ui_right"):
+			fp.position = $AnimatedSprite2D/LeftNode.position
+			fp.material.set("shader_paramater/rotation", 1.5)
+			fp.amount = 50
+			fp.gravity.x = 980.0
+				
 			facing_right = true
 			sprite.set_flip_h(false)
 			#var f = force_to_gravity.orthogonal().normalized() * delta * 100000.0
@@ -119,6 +130,9 @@ func _process(delta: float) -> void:
 			
 		#if on_ground && Input.is_action_pressed("ui_left"):
 		if Input.is_action_pressed("ui_left"):
+			fp.position = $AnimatedSprite2D/RightNode.position
+			fp.material.set("shader_paramater/rotation", 1.5)
+			fp.amount = 50			
 			facing_right = false
 			sprite.set_flip_h(true)
 			#var f = force_to_gravity.orthogonal().rotated(deg_to_rad(180)).normalized() * delta * 100000.0
@@ -145,7 +159,7 @@ func _process(delta: float) -> void:
 				_shoot_bullet.rpc_id(1, self.multiplayer_id, bullet_direction, self.position, self.linear_velocity)
 			else:
 				_shoot_bullet(1, bullet_direction, self.position, self.linear_velocity)
-
+		
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	#self.linear_velocity = Vector2.ZERO

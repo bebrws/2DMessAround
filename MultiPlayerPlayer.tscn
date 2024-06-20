@@ -1,8 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://bdxdojlrm5uuk"]
+[gd_scene load_steps=19 format=3 uid="uid://bdxdojlrm5uuk"]
 
 [ext_resource type="Script" path="res://MultiPlayerShooterPlayerRB.gd" id="1_rmf1d"]
 [ext_resource type="PackedScene" uid="uid://d4m6556x1e6c" path="res://Bullet.tscn" id="2_6txfk"]
 [ext_resource type="Texture2D" uid="uid://dgr7uvcjuqcoo" path="res://PlayerSpriteSheet2.png" id="3_2t5te"]
+[ext_resource type="Shader" path="res://MultiPlayerPlayerFireShader.gdshader" id="4_tbyq1"]
+[ext_resource type="Texture2D" uid="uid://brvpw1y03cu4v" path="res://SingleFire.png" id="5_ph8mc"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oh064"]
 absorbent = true
@@ -64,6 +66,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bwson"]
+shader = ExtResource("4_tbyq1")
+shader_parameter/rotation = 1.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_508ad"]
 custom_solver_bias = 1.0
 
@@ -122,6 +128,18 @@ position = Vector2(61, 0)
 position = Vector2(-61, 0)
 
 [node name="CenterNode" type="Node2D" parent="AnimatedSprite2D"]
+
+[node name="FireNode" type="Node2D" parent="AnimatedSprite2D"]
+position = Vector2(0, 90)
+
+[node name="FireParticles2D" type="CPUParticles2D" parent="AnimatedSprite2D/FireNode"]
+material = SubResource("ShaderMaterial_bwson")
+position = Vector2(0, 7)
+amount = 50
+lifetime = 0.5
+texture = ExtResource("5_ph8mc")
+emission_shape = 1
+emission_sphere_radius = 20.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.08165e-12, 0)

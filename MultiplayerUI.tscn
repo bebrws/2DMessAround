@@ -44,6 +44,7 @@ offset_bottom = 78.0
 text = "Address:"
 
 [node name="Address" type="LineEdit" parent="."]
+layout_mode = 0
 offset_left = 495.0
 offset_top = 98.0
 offset_right = 802.0

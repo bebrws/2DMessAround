@@ -23,6 +23,12 @@ properties/2/replication_mode = 1
 properties/3/path = NodePath("Sprite2D:flip_v")
 properties/3/spawn = true
 properties/3/replication_mode = 1
+properties/4/path = NodePath("Sprite2D:position")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+properties/5/path = NodePath("Sprite2D:rotation")
+properties/5/spawn = true
+properties/5/replication_mode = 1
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c3yjv"]
 radius = 3.91763

@@ -10,7 +10,11 @@ absorbent = true
 [sub_resource type="CircleShape2D" id="CircleShape2D_508ad"]
 custom_solver_bias = 1.0
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_8ghht"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c3yjv"]
+radius = 3.91763
+height = 8.39491
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_52cu6"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
@@ -29,10 +33,6 @@ properties/4/replication_mode = 1
 properties/5/path = NodePath("Sprite2D:rotation")
 properties/5/spawn = true
 properties/5/replication_mode = 1
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c3yjv"]
-radius = 3.91763
-height = 8.39491
 
 [node name="RigidBody2D" type="RigidBody2D" groups=["has_gravity", "player"]]
 position = Vector2(1, -90)
@@ -53,9 +53,6 @@ position = Vector2(0, -92)
 position = Vector2(-2.08165e-12, 0)
 scale = Vector2(7.12, 9.04)
 shape = SubResource("CircleShape2D_508ad")
-
-[node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_8ghht")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
@@ -94,5 +91,8 @@ position = Vector2(129, 2.08165e-12)
 position = Vector2(-133, 2.08165e-12)
 
 [node name="CenterNode" type="Node2D" parent="Sprite2D"]
+
+[node name="PlayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_52cu6")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
